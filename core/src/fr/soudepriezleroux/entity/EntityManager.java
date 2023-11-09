@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class EntityManager {
-    private static ArrayList<Entity> entities = new ArrayList<>();
-    private static SpriteBatch spriteBatch = new SpriteBatch();
+    private static ArrayList<Entity> entities;
+    private static SpriteBatch spriteBatch;
 
     public static void init(Camera camera){
         entities = new ArrayList<>();
+        spriteBatch = new SpriteBatch();
+
         spriteBatch.setProjectionMatrix(camera.combined);
     }
 
