@@ -20,7 +20,7 @@ public class Entity {
     private long animationLoopTimer = 0;
     private final int animationTime = 500;
     private int animationFrame = 0;
-    private Facing facing;
+    protected Facing facing;
 
     public Entity(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing){
 
