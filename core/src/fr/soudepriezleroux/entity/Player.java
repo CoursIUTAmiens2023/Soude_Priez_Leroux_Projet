@@ -24,18 +24,19 @@ public class Player extends Entity{
 
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 this.setCoord(screenCoord[0]+(speed * Gdx.graphics.getDeltaTime()), screenCoord[1]);
-                //this.facing = Facing.RIGHT;        Attente des modif de la class Entity
+                this.facing = Facing.LEFT;
 
             } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 this.setCoord(screenCoord[0]-(speed * Gdx.graphics.getDeltaTime()), screenCoord[1]);
-                //this.facing = Facing.LEFT;        Attente des modif de la class Entity
+                this.facing = Facing.RIGHT;
+
             } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 this.setCoord(screenCoord[0], screenCoord[1]+(speed * Gdx.graphics.getDeltaTime()));
-                //this.facing = Facing.UP;        Attente des modif de la class Entity
+                this.facing = Facing.UP;
 
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 this.setCoord(screenCoord[0], screenCoord[1]-(speed * Gdx.graphics.getDeltaTime()));
-                //this.facing = Facing.DOWN;        Attente des modif de la class Entity
+                this.facing = Facing.DOWN;
             }
         }
     }
