@@ -83,5 +83,8 @@ public class Entity {
         this.screenCoord[1] = y;
     }
 
+    public boolean isColliding(Rectangle hitbox){
+        return hitbox.overlaps(this.hitbox);
+    }
 
 }

@@ -2,13 +2,16 @@ package fr.soudepriezleroux.entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class EntityManager {
+    @Getter
     private static ArrayList<Entity> entities = new ArrayList<>();
+    @Getter
     private static SpriteBatch spriteBatch = new SpriteBatch();
 
     public static void init(Camera camera){
@@ -25,10 +28,6 @@ public class EntityManager {
         for (Object entity:entities) {
             addEntity((Entity) entity);
         }
-    }
-
-    public static ArrayList<Entity> getEntities(){
-        return entities;
     }
 
     public static void render(){
@@ -48,6 +47,10 @@ public class EntityManager {
         for (Entity entity:entities) {
             EntityManager.removeEntity(entity.getUuid());
         }
+    }
+
+    public static SpriteBatch getBatch(){
+        return spriteBatch;
     }
 
     public static void dispose(){
