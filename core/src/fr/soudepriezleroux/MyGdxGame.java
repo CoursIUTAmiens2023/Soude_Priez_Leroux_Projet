@@ -1,12 +1,16 @@
 package fr.soudepriezleroux;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.soudepriezleroux.entity.Entity;
 import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
+import fr.soudepriezleroux.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -23,16 +27,16 @@ public class MyGdxGame extends ApplicationAdapter {
 		UUID entity1 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,60,64,64, Facing.LEFT));
 		UUID entity2 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,180,64,64, Facing.UP));
 
+		UUID player = EntityManager.addEntity(new Player("player",true,2,64,64,60,60,64,64, Facing.LEFT));
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0.01f, 1);
-
+		
 		camera.update();
 
 		EntityManager.render();
-
 	}
 	
 	@Override
