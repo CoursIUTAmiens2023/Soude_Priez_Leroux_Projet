@@ -35,7 +35,8 @@ public class Entity {
         sprites = new ArrayList<>();
 
         for (int i = 0; i < nbrFrame; i++) {
-            Sprite spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
+            Sprite spriteTemp;
+            spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
             spriteTemp.setRotation(facing.get());
             sprites.add(spriteTemp);
         }
