@@ -14,7 +14,7 @@ public class Entity {
     private final UUID uuid;
     private final ArrayList<Sprite> textures;
     private final Rectangle hitbox;
-    private float[] screenCoord;
+    protected float[] screenCoord;
     private final float[] textureSize;
     private final boolean isAnimated;
     private long animationLoopTimer = 0;
