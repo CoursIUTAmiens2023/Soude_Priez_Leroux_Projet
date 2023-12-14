@@ -22,13 +22,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		Map.init(camera);
 		EntityManager.init(camera);
 
-
 		UUID entity1 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,60,64,64, Facing.LEFT));
 		UUID entity2 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,180,64,64, Facing.UP));
 
-		UUID player = EntityManager.addEntity(new Player("player",true,2,64,64,60,60,32,32, Facing.LEFT));
-		//UUID map = EntityManager.addEntity(new Entity("map",false,1,0,0,577,0,859,950, Facing.DOWN));
+
+
+		UUID PacGum = EntityManager.addEntity(new PacGum("pacGum", 500, false, 1, 32,32, 500, 300, 32,32, Facing.LEFT));
+
+		UUID player = EntityManager.addEntity(new Player("player",true,2,32,32,60,60,32,32, Facing.LEFT));
+
 		new Map("map", 577, 0, 859, 950, 1369, 1513);
+
+		CollisionManager.init(EntityManager.getEntities(), player);
 	}
 
 	@Override
@@ -39,6 +44,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		Map.render();
 		EntityManager.render();
+		CollisionManager.render();
 
 	}
 	

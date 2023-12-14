@@ -3,15 +3,19 @@ package fr.soudepriezleroux.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Player extends Entity{
 
     private int speed;
+    private static boolean isInvincible;
+    private static  long timeInvicible;
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
 
         this.speed = 200;
+        isInvincible = false;
     }
 
     private void run(float[] screenCoord){
@@ -34,10 +38,32 @@ public class Player extends Entity{
         }
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public static void EatCheese(Object miamMiam){
+        if (miamMiam.getClass().getSimpleName().equals("PacGum")){
+            isInvincible = true;
+            timeInvicible = System.currentTimeMillis();
+            // + Ajout des points
+        } else {
+            // Ajout des points
+        }   // Prise en compte de l'ingestion des fantomes
+    }
+
+    @Override
+    public Rectangle getHitbox() {
+        return super.getHitbox();
+    }
+
     @Override
     public void render(SpriteBatch spriteBatch){
         float[] screenCoord = getScreenCoord();
         run(screenCoord);
+
+        if (System.currentTimeMillis() - timeInvicible > 10000) isInvincible = false;
+
         if(!(Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) &&
                 !(Gdx.input.isKeyPressed(Input.Keys.UP) && Gdx.input.isKeyPressed(Input.Keys.DOWN))){
             if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {

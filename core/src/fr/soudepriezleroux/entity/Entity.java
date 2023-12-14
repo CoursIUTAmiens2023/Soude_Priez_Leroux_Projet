@@ -75,6 +75,10 @@ public class Entity {
         return uuid;
     }
 
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+
     public float[] getScreenCoord() {
         return screenCoord;
     }
