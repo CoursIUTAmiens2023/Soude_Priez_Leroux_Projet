@@ -1,30 +1,42 @@
 package fr.soudepriezleroux;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
+import fr.soudepriezleroux.entity.Entity;
+import fr.soudepriezleroux.entity.EntityManager;
+import fr.soudepriezleroux.entity.Facing;
+
+import java.util.UUID;
 
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+	private OrthographicCamera camera;
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1980, 980);
+
+		EntityManager.init(camera);
+
+		UUID entity1 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,60,64,64, Facing.LEFT));
+		UUID entity2 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,180,64,64, Facing.UP));
+
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		ScreenUtils.clear(0, 0, 0.01f, 1);
+
+		camera.update();
+
+		EntityManager.render();
+
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		EntityManager.dispose();
 	}
 }
