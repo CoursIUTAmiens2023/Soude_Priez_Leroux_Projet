@@ -42,6 +42,7 @@ public class Player extends Entity{
         return speed;
     }
 
+
     public static void EatCheese(Object miamMiam){
         if (miamMiam.getClass().getSimpleName().equals("PacGum")){
             isInvincible = true;
@@ -55,6 +56,10 @@ public class Player extends Entity{
     @Override
     public Rectangle getHitbox() {
         return super.getHitbox();
+    }
+
+    public static boolean isIsInvincible() {
+        return isInvincible;
     }
 
     @Override

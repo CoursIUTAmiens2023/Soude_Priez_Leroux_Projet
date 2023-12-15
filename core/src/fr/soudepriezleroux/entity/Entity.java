@@ -21,6 +21,7 @@ public class Entity {
     private final int animationTime = 500;
     private int animationFrame = 0;
     protected Facing facing;
+    private ArrayList<Sprite> spritesBoosted;   //Sprite pour quand PacMan a mangé un fruit
 
     public Entity(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing){
 
@@ -32,14 +33,27 @@ public class Entity {
         hitbox = new Rectangle(x-(textureSizeX/2),y,width,height);
         screenCoord = new float[]{x,y};
         textureSize = new float[]{textureSizeX,textureSizeY};
-        sprites = new ArrayList<>();
 
-        for (int i = 0; i < nbrFrame; i++) {
+        sprites =  setListSprite(0, nbrFrame, prefix);
+
+
+        if (prefix.equals("player") || prefix.equals("ghost")){
+            spritesBoosted = setListSprite(nbrFrame, (nbrFrame*2), prefix);
+            System.out.println("yes");
+        }
+    }
+
+    private ArrayList<Sprite> setListSprite(int start, int nbrFrame, String prefix){
+        ArrayList<Sprite> spriteArrayListTemp = new ArrayList<>();
+        for (int i = start; i < nbrFrame; i++){
             Sprite spriteTemp;
             spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
+            System.out.println(prefix + "_f_"+i+".png");
             spriteTemp.setRotation(facing.get());
-            sprites.add(spriteTemp);
+            spriteArrayListTemp.add(spriteTemp);
         }
+
+        return spriteArrayListTemp;
     }
 
     public void render(SpriteBatch spriteBatch){
@@ -59,10 +73,18 @@ public class Entity {
         }
 
         Sprite spriteTemp = sprites.get(animationFrame);
+
+        if (spritesBoosted != null && Player.isIsInvincible()){
+            spriteTemp = spritesBoosted.get(animationFrame);
+        } else {
+           spriteTemp = sprites.get(animationFrame);
+        }
         spriteTemp.setBounds(hitbox.x, hitbox.y,textureSize[0],textureSize[1]);
         spriteTemp.setOriginCenter();
         spriteTemp.setRotation(facing.get());
         spriteTemp.draw(spriteBatch);
+
+
     }
 
     public void dispose(){

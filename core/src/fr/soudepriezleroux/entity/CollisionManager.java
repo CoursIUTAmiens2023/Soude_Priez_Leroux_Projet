@@ -22,17 +22,8 @@ public class CollisionManager {
         for (Entity entity:entities){
             if (player != entity){
                 if(player.getHitbox().overlaps(entity.getHitbox())){
-                    float[] playerScreenCoord = player.getScreenCoord();
-                    float[] entityScreenCoord = entity.getScreenCoord();
+                    Player.EatCheese(entity);
                     entity.dispose();
-                    /*
-                    if (playerScreenCoord[0] < entityScreenCoord[0]){
-                        //player.setCoord(playerScreenCoord[0]-(player.getSpeed() * Gdx.graphics.getDeltaTime()), playerScreenCoord[1]);
-                    }else {
-                        //player.setCoord(playerScreenCoord[0]+(player.getSpeed() * Gdx.graphics.getDeltaTime()), playerScreenCoord[1]);
-                    }
-
-                     */
                 }
             }
         }
