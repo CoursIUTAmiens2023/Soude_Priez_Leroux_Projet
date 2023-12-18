@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.soudepriezleroux.entity.Entity;
 import fr.soudepriezleroux.entity.Facing;
+import fr.soudepriezleroux.map.MatriceMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Random;
 
 public class Ghost extends Entity {
 
-    private int[] pos;
+    private int[] pos;      // != screenCoord
     private int direction;
     private int speed;
 
@@ -80,8 +81,6 @@ public class Ghost extends Entity {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-
-        moveRight();
         super.render(spriteBatch);
     }
 }

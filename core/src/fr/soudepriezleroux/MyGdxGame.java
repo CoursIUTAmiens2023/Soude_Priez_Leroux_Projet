@@ -6,7 +6,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import fr.soudepriezleroux.entity.Entity;
 import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
+import fr.soudepriezleroux.entity.ghost.Blinky;
 import fr.soudepriezleroux.entity.ghost.Ghost;
+import fr.soudepriezleroux.map.MatriceMap;
 
 import java.util.UUID;
 
@@ -23,8 +25,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		UUID entity1 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,60,64,64, Facing.LEFT));
 		UUID entity2 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,180,64,64, Facing.UP));
-		int[] pos = {0,0};
-		UUID ghost1 = EntityManager.addEntity(new Ghost("ghost",false,1,64,64,60,60,64,64, Facing.LEFT, pos, 2, 100));
+
 
 	}
 
