@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class Entity {
     private final UUID uuid;
-    private final ArrayList<Sprite> textures;
+    private final ArrayList<Sprite> sprites;
     private final Rectangle hitbox;
     protected float[] screenCoord;
     private final float[] textureSize;
@@ -32,12 +32,12 @@ public class Entity {
         hitbox = new Rectangle(x-(textureSizeX/2),y,width,height);
         screenCoord = new float[]{x,y};
         textureSize = new float[]{textureSizeX,textureSizeY};
-        textures = new ArrayList<>();
+        sprites = new ArrayList<>();
 
         for (int i = 0; i < nbrFrame; i++) {
             Sprite spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
             spriteTemp.setRotation(facing.get());
-            textures.add(spriteTemp);
+            sprites.add(spriteTemp);
         }
     }
 
@@ -48,16 +48,16 @@ public class Entity {
 
         if(isAnimated){
             if(TimeUtils.millis() > animationLoopTimer + animationTime){
-                if(animationFrame == 0){
-                    animationFrame = 1;
-                }else{
+                if(animationFrame == (sprites.size()-1)){
                     animationFrame = 0;
+                } else {
+                   animationFrame++;
                 }
                 animationLoopTimer = TimeUtils.millis();
             }
         }
 
-        Sprite spriteTemp = textures.get(animationFrame);
+        Sprite spriteTemp = sprites.get(animationFrame);
         spriteTemp.setBounds(hitbox.x, hitbox.y,textureSize[0],textureSize[1]);
         spriteTemp.setOriginCenter();
         spriteTemp.setRotation(facing.get());
@@ -65,11 +65,10 @@ public class Entity {
     }
 
     public void dispose(){
-        for (Sprite sprite:textures) {
+        for (Sprite sprite: sprites) {
             sprite.getTexture().dispose();
         }
     }
-
 
     public UUID getUuid() {
         return uuid;
@@ -82,6 +81,4 @@ public class Entity {
         this.screenCoord[0] = x;
         this.screenCoord[1] = y;
     }
-
-
 }

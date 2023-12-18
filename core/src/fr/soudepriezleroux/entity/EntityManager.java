@@ -14,6 +14,8 @@ public class EntityManager {
     public static void init(Camera camera){
         spriteBatch = new SpriteBatch();
         entities = new ArrayList<>();
+        spriteBatch = new SpriteBatch();
+
         spriteBatch.setProjectionMatrix(camera.combined);
     }
 
