@@ -5,17 +5,30 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class Player extends Entity{
 
     private int speed;
     private static boolean isInvincible;
     private static  long timeInvicible;
+
+    private List<UUID> eatenObject;
+
+    private int comboGhost;
+
+    private int points;
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
 
         this.speed = 200;
         isInvincible = false;
+        points = 0;
+        comboGhost = 0;
+        eatenObject = new ArrayList<>();
     }
 
     private void run(float[] screenCoord){
@@ -42,15 +55,23 @@ public class Player extends Entity{
         return speed;
     }
 
+    public void eatGhost(){
+        points += 200 * (int)Math.pow(2, comboGhost);
+        comboGhost++;
+    }
 
-    public static void EatCheese(Object miamMiam){
-        if (miamMiam.getClass().getSimpleName().equals("PacGum")){
-            isInvincible = true;
-            timeInvicible = System.currentTimeMillis();
-            // + Ajout des points
-        } else {
-            // Ajout des points
-        }   // Prise en compte de l'ingestion des fantomes
+    public void eatCheese(String miamMiam, UUID uuidEntity){
+        if (!eatenObject.contains(uuidEntity)){
+            if (miamMiam.equals("PacGum")){
+                eatenObject.add(uuidEntity);
+                isInvincible = true;
+                timeInvicible = System.currentTimeMillis();
+                points+= 50;
+                // + Ajout des points
+            } else {
+                points+=10;
+            }   // Prise en compte de l'ingestion des fantomes
+        }
     }
 
     @Override

@@ -22,8 +22,17 @@ public class CollisionManager {
         for (Entity entity:entities){
             if (player != entity){
                 if(player.getHitbox().overlaps(entity.getHitbox())){
-                    Player.EatCheese(entity);
-                    entity.dispose();
+                    String nameClass = entity.getClass().getSimpleName();
+                    if(nameClass.equals("Ghost")){
+                        player.eatGhost();
+                        entity.dispose();
+                    }else if(nameClass.equals("Fruits")){
+                        player.eatCheese(nameClass, entity.getUuid());
+                        entity.dispose();
+                    } else {
+                        player.eatCheese(nameClass, entity.getUuid());
+                        entity.dispose();
+                    }
                 }
             }
         }

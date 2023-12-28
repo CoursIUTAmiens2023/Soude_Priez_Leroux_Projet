@@ -36,10 +36,8 @@ public class Entity {
 
         sprites =  setListSprite(0, nbrFrame, prefix);
 
-
-        if (prefix.equals("player") || prefix.equals("ghost")){
+        if (prefix.equals("ghost")){
             spritesBoosted = setListSprite(nbrFrame, (nbrFrame*2), prefix);
-            System.out.println("yes");
         }
     }
 
@@ -48,7 +46,6 @@ public class Entity {
         for (int i = start; i < nbrFrame; i++){
             Sprite spriteTemp;
             spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
-            System.out.println(prefix + "_f_"+i+".png");
             spriteTemp.setRotation(facing.get());
             spriteArrayListTemp.add(spriteTemp);
         }
@@ -72,8 +69,7 @@ public class Entity {
             }
         }
 
-        Sprite spriteTemp = sprites.get(animationFrame);
-
+        Sprite spriteTemp;
         if (spritesBoosted != null && Player.isIsInvincible()){
             spriteTemp = spritesBoosted.get(animationFrame);
         } else {
