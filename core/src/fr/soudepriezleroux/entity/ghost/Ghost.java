@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Ghost extends Entity {
 
-    private int[] pos;      // != screenCoord
+    private int[] pos;      // coordonnées matrice
     private int direction;
     private int speed;
 
@@ -47,6 +47,7 @@ public class Ghost extends Entity {
         this.speed = speed;
     }
 
+    // Liste des directions valides pour le ghost
     public List<Integer> getValidDirections(int[][] plan){
         // HAUT 0 DROITE 1 BAS 2 GAUCHE 3
         List<Integer> validDirections = new ArrayList<>();
@@ -57,6 +58,7 @@ public class Ghost extends Entity {
         return validDirections;
     }
 
+    // Détermine une direction aléatoire pour le ghost
     public int getRandomDirection(int[][] plan) {
         Random rand = new Random();
         List<Integer> validDirections = getValidDirections(plan);

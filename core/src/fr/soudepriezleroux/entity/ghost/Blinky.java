@@ -13,6 +13,7 @@ public class Blinky extends Ghost{
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing, pos, direction, speed);
     }
 
+    // Phase de poursuite, Blinky poursuit sa clible directement via le chemin le plus rapide
     public void chase(){
         int[] playerPos = {29, 26};//player.getPos();
         int[] pos = {1, 1};//getPos();

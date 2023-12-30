@@ -7,6 +7,8 @@ public class MatriceMap {
 
     // Reminder: x = ordonnée et y = abscisse, (0,0) en haut à gauche, les x vont vers le bas et les y vont vers la droite
 
+    // Initialise la matrice de jeu, chaque entier représente une "case" de ma map
+    // 0 = vide, 1 = point, 2 = pacgum, 3 = fruit, 4 = mur, 5 = zone fantôme
     public static void init() {
         matrice = new int[][]{
                 {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
@@ -43,6 +45,7 @@ public class MatriceMap {
         };
     }
 
+    // Trouve l'itinéraire le plus rapide entre 2 coordonnées de la matrice
     public static List<String> findShortestPath(int startX, int startY, int targetX, int targetY) {
         int rows = matrice.length;
         int cols = matrice[0].length;
@@ -77,6 +80,7 @@ public class MatriceMap {
         return Collections.emptyList();
     }
 
+    // Crée le chemin en remontant la liste des parents
     private static List<String> constructPath(Node destination) {
         List<String> path = new ArrayList<>();
 
@@ -89,6 +93,7 @@ public class MatriceMap {
         return path;
     }
 
+    // Donne la direction dans laquelle se trouve un node par rapport à un node voisin
     private static String getDirection(Node from, Node to) {
         if (from.x < to.x) return "Bas";
         if (from.x > to.x) return "Haut";
@@ -97,6 +102,7 @@ public class MatriceMap {
         return ""; // Sert à rien mais comme ça Java est content :D
     }
 
+    // Vérifie la coordonnée de trouve dans la matrice
     private static boolean isValidMove(int x, int y, int rows, int cols) {
         return x >= 0 && x < rows && y >= 0 && y < cols;
     }
