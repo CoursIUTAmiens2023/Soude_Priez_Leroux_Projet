@@ -24,16 +24,18 @@ public class EntityManager {
     }
 
     //Ajout d'une entité a la liste
-    public static UUID addEntity(Object entity){
-        entities.add((Entity) entity);
-        return ((Entity) entity).getUuid();
+    public static UUID addEntity(Entity entity){
+        entities.add(entity);
+        return (entity).getUuid();
     }
 
     //Ajout de plusieurs entité a la liste
-    public static void addEntities(List<?> entities){
-        for (Object entity:entities) {
-            addEntity((Entity) entity);
+    public static List<UUID> addEntities(List<Entity> entities){
+        List<UUID> NewUuids = new ArrayList<>();
+        for (Entity entity:entities) {
+            NewUuids.add(addEntity(entity));
         }
+        return NewUuids;
     }
 
     //Methode de rendu pour faire le rendu de chaque entité du jeu
