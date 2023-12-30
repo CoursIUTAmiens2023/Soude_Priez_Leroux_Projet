@@ -6,34 +6,46 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
+import fr.soudepriezleroux.map.MapManager;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Entity {
+    //Identificateur unique de chaque entity
     private final UUID uuid;
+    //Liste des textures de l'entité
     private final ArrayList<Sprite> sprites;
+
     private final Rectangle hitbox;
+    //Coordonées sur l'ecran de l'entité
     protected float[] screenCoord;
+    //Taille de la texture a affiché a l'écran
     private final float[] textureSize;
+    //Si l'entité doit etre annimé entre ces plusieurs textures
     private final boolean isAnimated;
+    //Variables de travail qui sert a gardé information du temps qui passe
     private long animationLoopTimer = 0;
+    //Temps en milliseconds entre chaque frame de la texture
     private final int animationTime = 500;
+    //Frame de base de l'animation
     private int animationFrame = 0;
-    private Facing facing;
+    //Direction dans laquelle l'entité regarde
+    protected Facing facing;
 
     public Entity(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing){
 
+        //Genere l'indentificateur unique et aléatoire
         this.uuid = UUID.randomUUID();
 
         this.facing = facing;
 
         this.isAnimated = isAnimated;
-        hitbox = new Rectangle(x-(textureSizeX/2),y,width,height);
+        hitbox = new Rectangle(x,y,width,height);
         screenCoord = new float[]{x,y};
         textureSize = new float[]{textureSizeX,textureSizeY};
         sprites = new ArrayList<>();
-
+        //Recuperation des diffrentes textures pour l'animation et donne la bonne orientation
         for (int i = 0; i < nbrFrame; i++) {
             Sprite spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
             spriteTemp.setRotation(facing.get());
@@ -77,8 +89,76 @@ public class Entity {
     public float[] getScreenCoord() {
         return screenCoord;
     }
+
     public void setCoord(float x, float y){
         this.screenCoord[0] = x;
         this.screenCoord[1] = y;
     }
+
+    public void move(float distance){
+        if(distance <= 0){
+            return;
+        }
+
+        int currentX = (int) Math.ceil(this.screenCoord[0] / 30) - 1;
+        int currentY = (int) Math.ceil(this.screenCoord[1] / 30) - 1;
+
+        switch (this.facing){
+            case RIGHT:
+                if(currentX == (int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1){
+                    this.screenCoord[0] += distance;
+                    break;
+                }
+                if(currentX + 1 > 26){
+                    break;
+                }
+                if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] != 4){
+                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] == 4){
+                        break;
+                    }
+                    this.screenCoord[0] += distance;
+                    break;
+                }
+            case LEFT:
+                if(currentX == (int) Math.ceil((this.screenCoord[0] - distance) / 30) - 1){
+                    this.screenCoord[0] -= distance;
+                    break;
+                }
+                if(currentX - 1 < 0){
+                    break;
+                }
+                if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] - distance) / 30) - 1] != 4){
+                    this.screenCoord[0] -= distance;
+                    break;
+                }
+            case UP:
+                if(currentY == (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1){
+                    this.screenCoord[1] += distance;
+                    break;
+                }
+                if(currentY + 1 > 30){
+                    break;
+                }
+                if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][currentX] != 4){
+                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] == 4){
+                        break;
+                    }
+                    this.screenCoord[1] += distance;
+                    break;
+                }
+            case DOWN:
+                if(currentY == (int) Math.ceil((this.screenCoord[1] - distance) / 30) - 1){
+                    this.screenCoord[1] -= distance;
+                    break;
+                }
+                if(currentY - 1 < 0){
+                    break;
+                }
+                if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] - distance) / 30) - 1][currentX] != 4){
+                    this.screenCoord[1] -= distance;
+                    break;
+                }
+        }
+    }
+
 }
