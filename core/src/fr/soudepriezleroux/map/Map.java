@@ -12,9 +12,9 @@ public class Map {
     private int[][] matrix;
     private final Sprite sprite;
 
-    public Map(String fileName) {
-        this.sprite = new Sprite(new Texture(Gdx.files.internal(fileName + ".png")),28,31);
-        sprite.setSize(800,886);
+    public Map() {
+        this.sprite = new Sprite(new Texture(Gdx.files.internal("img.png")),81,93);
+        sprite.setSize(810,930);
         sprite.setPosition(0,0);
         init();
     }

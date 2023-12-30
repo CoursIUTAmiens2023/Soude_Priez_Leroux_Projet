@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("PacMan");
 		config.setResizable(false);
-		config.setWindowedMode(800,886);
-		config.setWindowSizeLimits(800,886,800,886);
+		config.setWindowedMode(810,930);
+		config.setWindowSizeLimits(810,930,810,930);
 		config.useVsync(true);
 		new Lwjgl3Application(new MyGdxGame(), config);
 	}
