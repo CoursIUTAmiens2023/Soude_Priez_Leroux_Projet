@@ -12,21 +12,24 @@ public class EntityManager {
     private static SpriteBatch spriteBatch;
 
     public static void init(Camera camera){
+        spriteBatch = new SpriteBatch();
         entities = new ArrayList<>();
         spriteBatch = new SpriteBatch();
 
         spriteBatch.setProjectionMatrix(camera.combined);
     }
 
-    public static UUID addEntity(Object entity){
-        entities.add((Entity) entity);
-        return ((Entity) entity).getUuid();
+    public static UUID addEntity(Entity entity){
+        entities.add(entity);
+        return (entity).getUuid();
     }
 
-    public static void addEntities(List<?> entities){
-        for (Object entity:entities) {
-            addEntity((Entity) entity);
+    public static List<UUID> addEntities(List<Entity> entities){
+        List<UUID> NewUuids = new ArrayList<>();
+        for (Entity entity:entities) {
+            NewUuids.add(addEntity(entity));
         }
+        return NewUuids;
     }
 
     public static ArrayList<Entity> getEntities(){
