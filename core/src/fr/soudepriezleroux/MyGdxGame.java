@@ -30,8 +30,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		bgMusic.play();
 
 
-		UUID PacGum = EntityManager.addEntity(new PacGum("pacGum", 500, false, 1, 32,32, 700, 300, 32,32, Facing.LEFT));
-		UUID fruit = EntityManager.addEntity(new Fruits("pacGum", 500, false, 1, 32,32, 762, 599, 32,32, Facing.LEFT));
+		UUID PacGum = EntityManager.addEntity(new PacGum("pacGum", 50, false, 1, 32,32, 700, 300, 32,32, Facing.LEFT));
+		UUID cerise = EntityManager.addEntity(new Fruits("cerise", false, 1, 32,32, 762, 599, 32,32, Facing.DOWN));
+		UUID fraise = EntityManager.addEntity(new Fruits("fraise", false, 1, 32,32, 862, 699, 32,32, Facing.DOWN));
+		UUID orange = EntityManager.addEntity(new Fruits("orange", false, 1, 32,32, 962, 899, 32,32, Facing.DOWN));
+		UUID pomme = EntityManager.addEntity(new Fruits("pomme", false, 1, 32,32, 662, 499, 32,32, Facing.DOWN));
 
 		UUID player = EntityManager.addEntity(new Player("player",true,2,32,32,60,60,32,32, Facing.LEFT));
 
@@ -45,7 +48,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
 		// 											(Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 										//	Anti aliasing
-		//ScreenUtils.clear(0, 0, 0.01f, 1);
+		ScreenUtils.clear(0, 0, 0.01f, 1);
 		
 		camera.update();
 

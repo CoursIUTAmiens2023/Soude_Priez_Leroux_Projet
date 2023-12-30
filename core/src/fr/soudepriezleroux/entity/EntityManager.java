@@ -42,7 +42,11 @@ public class EntityManager {
     }
 
     public static void removeEntity(UUID uuid){
-        entities.forEach(entity -> entity.dispose());
+        entities.forEach(entity -> {
+            if (entity.getUuid()  == uuid){
+                entity.dispose();
+            }
+        });
         entities.removeIf(entity -> uuid == entity.getUuid());
     }
 
