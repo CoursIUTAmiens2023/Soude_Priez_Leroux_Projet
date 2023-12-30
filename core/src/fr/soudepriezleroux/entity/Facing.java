@@ -1,5 +1,6 @@
 package fr.soudepriezleroux.entity;
 
+//Enum d'angle de l'orientation des sprite
 public enum Facing {
     DOWN(0f),
     UP(180f),

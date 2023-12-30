@@ -12,19 +12,30 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Entity {
+    //Identificateur unique de chaque entity
     private final UUID uuid;
+    //Liste des textures de l'entité
     private final ArrayList<Sprite> sprites;
+
     private final Rectangle hitbox;
+    //Coordonées sur l'ecran de l'entité
     protected float[] screenCoord;
+    //Taille de la texture a affiché a l'écran
     private final float[] textureSize;
+    //Si l'entité doit etre annimé entre ces plusieurs textures
     private final boolean isAnimated;
+    //Variables de travail qui sert a gardé information du temps qui passe
     private long animationLoopTimer = 0;
+    //Temps en milliseconds entre chaque frame de la texture
     private final int animationTime = 500;
+    //Frame de base de l'animation
     private int animationFrame = 0;
+    //Direction dans laquelle l'entité regarde
     protected Facing facing;
 
     public Entity(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing){
 
+        //Genere l'indentificateur unique et aléatoire
         this.uuid = UUID.randomUUID();
 
         this.facing = facing;
@@ -34,7 +45,7 @@ public class Entity {
         screenCoord = new float[]{x,y};
         textureSize = new float[]{textureSizeX,textureSizeY};
         sprites = new ArrayList<>();
-
+        //Recuperation des diffrentes textures pour l'animation et donne la bonne orientation
         for (int i = 0; i < nbrFrame; i++) {
             Sprite spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
             spriteTemp.setRotation(facing.get());

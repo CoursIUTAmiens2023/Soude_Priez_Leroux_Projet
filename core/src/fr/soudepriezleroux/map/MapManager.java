@@ -4,18 +4,22 @@ import fr.soudepriezleroux.entity.EntityManager;
 
 public class MapManager {
 
+    //Declaration de la map unique
     static Map map;
 
+    //Initialisation de la dite map
     public static void init(){
         map = new Map();
     }
 
+    //Rendu de la map
     public static void render(){
         EntityManager.getBatch().begin();
         map.render();
         EntityManager.getBatch().end();
     }
 
+    //Matrice d'entier qui stock les informations de la map (les murs, les packgum etc)
     public static int[][] getData(){
         return new int[][]{
                 {4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4},
