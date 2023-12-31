@@ -1,6 +1,7 @@
 package fr.soudepriezleroux.entity.ghost;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
 
 public class Clyde extends Ghost{
@@ -29,7 +30,7 @@ public class Clyde extends Ghost{
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        if (/*getEatenDots()*/0 > 80) {
+        if (EntityManager.getPointsMiam() > 80) {
             if (isReady()) {
                 int mode = getMode();
                 int lastMode = getLastMode();
@@ -39,7 +40,7 @@ public class Clyde extends Ghost{
                 if (isIn() && isOut()) {
                     switch (mode) {
                         case 0:
-                            updateChaseTarget(/*getPlayerPos()*/new int[]{0, 0});
+                            updateChaseTarget(EntityManager.getPlayerPos());
                             goChaseDirection(chaseTarget);
                             break;
                         case 1:

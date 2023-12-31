@@ -12,6 +12,7 @@ public class Blinky extends Ghost{
 
     private final int[] scatterTarget;
     private int[] chaseTarget;
+    private int check = 0;
 
     public Blinky(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing, int[] pos, int direction, int speed, int[][] matrice) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing, pos, direction, speed, matrice);
@@ -59,6 +60,8 @@ public class Blinky extends Ghost{
             }
             move();
         }
+
+
         super.render(spriteBatch);
     }
 }

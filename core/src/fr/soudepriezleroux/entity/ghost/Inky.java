@@ -1,6 +1,7 @@
 package fr.soudepriezleroux.entity.ghost;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
 
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class Inky extends Ghost{
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        if (/*getEatenDots()*/0 >= 30) {
+        if (EntityManager.getPointsMiam() >= 30) {
             if (isReady()) {
                 int mode = getMode();
                 int lastMode = getLastMode();
@@ -61,7 +62,7 @@ public class Inky extends Ghost{
                 if (isIn() && isOut()) {
                     switch (mode) {
                         case 0:
-                            updateChaseTarget(/*getPlayerPos()*/new int[]{0, 0}, /*getPlayerFacing()*/Facing.UP, /*getBlinkyPos()*/new int[]{0, 0});
+                            updateChaseTarget(EntityManager.getPlayerPos(), EntityManager.getPlayerFacing(), EntityManager.getBlinkyPos());
                             goChaseDirection(chaseTarget);
                             break;
                         case 1:

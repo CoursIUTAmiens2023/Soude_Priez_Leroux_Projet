@@ -5,12 +5,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.soudepriezleroux.entity.*;
+import fr.soudepriezleroux.entity.ghost.*;
 import fr.soudepriezleroux.map.MapManager;
 import fr.soudepriezleroux.entity.Entity;
 import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
-import fr.soudepriezleroux.entity.ghost.Blinky;
-import fr.soudepriezleroux.entity.ghost.Ghost;
 import fr.soudepriezleroux.map.MatriceMap;
 
 import java.util.UUID;
@@ -33,12 +32,24 @@ public class MyGdxGame extends ApplicationAdapter {
 		EntityManager.init(camera);
 		MapManager.init();
 
-		UUID monGhost = EntityManager.addEntity(new Blinky("blinky", true, 1, 24, 24, 40, 230, 24, 24, Facing.UP,
-				new int[] {2, 2}, 0, 100, getMatrice()));
+		UUID monBlinky = EntityManager.addEntity(new Blinky("blinky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+				new int[] {2, 2}, -1, 100, getMatrice()));
+		UUID monPinky = EntityManager.addEntity(new Pinky("pinky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+				new int[] {2, 2}, -1, 100, getMatrice()));
+		UUID monInky = EntityManager.addEntity(new Inky("inky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+				new int[] {2, 2}, -1, 100, getMatrice()));
+		UUID monClyde = EntityManager.addEntity(new Clyde("clyde", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+				new int[] {2, 2}, -1, 100, getMatrice()));
 
 		//Creation du player au coordonnées X Y de la fenetre
 		UUID player = EntityManager.addEntity(new Player("player",false,2,16,16,395,210,16,16, Facing.UP));
 		EntityManager.setPlayer(player);
+		EntityManager.setBlinky(monBlinky);
+		EntityManager.addGhost(monBlinky);
+		EntityManager.addGhost(monPinky);
+		EntityManager.addGhost(monInky);
+		EntityManager.addGhost(monClyde);
+
 		CollisionManager.init(EntityManager.getEntities(), player);
 	}
 

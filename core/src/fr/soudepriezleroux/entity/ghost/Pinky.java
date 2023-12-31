@@ -1,6 +1,7 @@
 package fr.soudepriezleroux.entity.ghost;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
 
 import java.util.Arrays;
@@ -45,7 +46,7 @@ public class Pinky extends Ghost {
             if (isIn() && isOut()) {
                 switch (mode) {
                     case 0:
-                        updateChaseTarget(/*getPlayerPos()*/new int[]{0, 0}, /*getPlayerFacing()*/Facing.UP);
+                        updateChaseTarget(EntityManager.getPlayerPos(), EntityManager.getPlayerFacing());
                         goChaseDirection(chaseTarget);
                         break;
                     case 1:

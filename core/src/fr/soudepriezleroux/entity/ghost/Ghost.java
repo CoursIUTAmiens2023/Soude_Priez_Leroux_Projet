@@ -20,6 +20,8 @@ public abstract class Ghost extends Entity {
     private boolean in;
     private boolean out;
     private boolean ready;
+    private int centreX;
+    private int centreY;
 
     public Ghost(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing, int[] pos, int direction, int speed, int[][] matrice) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
@@ -33,6 +35,8 @@ public abstract class Ghost extends Entity {
         this.in = false;
         this.out = true;
         this.ready = false;
+        this.centreX = (int)width/2;
+        this.centreY = (int)height/2;
     }
 
     public int[] getPos() {
@@ -114,6 +118,22 @@ public abstract class Ghost extends Entity {
         this.ready = ready;
     }
 
+    public int getCentreX() {
+        return centreX;
+    }
+
+    public void setCentreX(int centreX) {
+        this.centreX = centreX;
+    }
+
+    public int getCentreY() {
+        return centreY;
+    }
+
+    public void setCentreY(int centreY) {
+        this.centreY = centreY;
+    }
+
     // Liste des directions valides pour le ghost
     public ArrayList<Integer> getValidDirections(){
         // HAUT 0 DROITE 1 BAS 2 GAUCHE 3
@@ -126,7 +146,7 @@ public abstract class Ghost extends Entity {
         if (!exclusions.contains(matrice[pos[0]-1][pos[1]]) && direction != 2) validDirections.add(0);
         if (!exclusions.contains(matrice[pos[0]][pos[1]+1]) && direction != 3) validDirections.add(1);
         if (!exclusions.contains(matrice[pos[0]+1][pos[1]]) && direction != 0) validDirections.add(2);
-        if (!exclusions.contains(matrice[pos[0]][pos[1]-1]) && direction != 2) validDirections.add(3);
+        if (!exclusions.contains(matrice[pos[0]][pos[1]-1]) && direction != 1) validDirections.add(3);
         return validDirections;
     }
 
@@ -204,34 +224,30 @@ public abstract class Ghost extends Entity {
         switch (direction){
             case 0: // HAUT
                 this.screenCoord[1] += speed * Gdx.graphics.getDeltaTime();
-                setFacing(Facing.UP);
                 break;
             case 1: // DROITE
                 this.screenCoord[0] += speed * Gdx.graphics.getDeltaTime();
-                setFacing(Facing.RIGHT);
                 break;
             case 2: // BAS
                 this.screenCoord[1] -= speed * Gdx.graphics.getDeltaTime();
-                setFacing(Facing.DOWN);
                 break;
             case 3: // GAUCHE
                 this.screenCoord[0] -= speed * Gdx.graphics.getDeltaTime();
-                setFacing(Facing.LEFT);
                 break;
         }
     }
 
     // Vérifier si les coordonnées actuelles correspondent à un checkpoint de coordonnées matrice
     public void checkPos() {
-        int pixelX = (int)screenCoord[0];
-        int pixelY = 930-(int)screenCoord[1]; // les Y partent du bas de les coordonnées pixel
+        int pixelX = (int)screenCoord[0]+centreX;
+        int pixelY = 930-((int)screenCoord[1]+centreY); // les Y partent du bas de les coordonnées pixel
 
         //System.out.println("PixelX : " + pixelX + " | PixelY : " + pixelY);
 
         // Taille d'une zone matrice
         int zoneSize = 30;
         // Taille du checkpoint de la zone
-        int checkpointSize = 10;
+        int checkpointSize = 20;
 
         // Identification de la zone actuelle
         int zoneX = pixelX / zoneSize;
@@ -243,7 +259,8 @@ public abstract class Ghost extends Entity {
         int checkpointX = zoneX * zoneSize + (zoneSize - checkpointSize) / 2;
         int checkpointY = zoneY * zoneSize + (zoneSize - checkpointSize) / 2;
 
-        //System.out.println("CheckpointX : " + checkpointX + " | CheckpointY : " + checkpointY);
+        //System.out.println("CheckpointX : " + checkpointX + " | CheckpointY : " + checkpointY);;
+        //System.out.println("CheckpointX : " + (checkpointX+checkpointSize) + " | CheckpointY : " + (checkpointY+checkpointSize));;
 
         // Vérifier si les coordonnées se trouvent dans le checkpoint
         if (pixelX >= checkpointX && pixelX < checkpointX + checkpointSize &&
