@@ -6,21 +6,33 @@ import fr.soudepriezleroux.entity.Entity;
 import fr.soudepriezleroux.entity.Facing;
 import fr.soudepriezleroux.map.MatriceMap;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-public class Ghost extends Entity {
+public abstract class Ghost extends Entity {
 
     private int[] pos;      // coordonnées matrice
-    private int direction;
+    private int direction;      // HAUT 0 DROITE 1 BAS 2 GAUCHE 3
+    private int baseSpeed;
     private int speed;
+    private int[][] matrice;
+    private int mode;       // 0 = chase, 1 = scatter, 2 = frightened
+    private int lastMode;
+    private boolean in;
+    private boolean out;
+    private boolean ready;
 
-    public Ghost(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing, int[] pos, int direction,int speed) {
+    public Ghost(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing, int[] pos, int direction, int speed, int[][] matrice) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
         this.pos = pos;
         this.direction = direction;
+        this.baseSpeed = speed;
         this.speed = speed;
+        this.matrice = matrice;
+        this.mode = 0;
+        this.lastMode = 0;
+        this.in = false;
+        this.out = true;
+        this.ready = false;
     }
 
     public int[] getPos() {
@@ -47,38 +59,204 @@ public class Ghost extends Entity {
         this.speed = speed;
     }
 
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public int getLastMode() {
+        return lastMode;
+    }
+
+    public void setLastMode(int lastMode) {
+        this.lastMode = lastMode;
+    }
+
+    public void setChase(){
+        mode = 0;
+        speed = baseSpeed;
+    }
+
+    public void setScatter(){
+        mode = 1;
+        speed = baseSpeed;
+    }
+
+    public void setFrightened(){
+        mode = 2;
+        speed = 2*baseSpeed/3;
+    }
+
+    public boolean isIn() {
+        return in;
+    }
+
+    public void setIn(boolean in) {
+        this.in = in;
+    }
+
+    public boolean isOut() {
+        return out;
+    }
+
+    public void setOut(boolean out) {
+        this.out = out;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
     // Liste des directions valides pour le ghost
-    public List<Integer> getValidDirections(int[][] plan){
+    public ArrayList<Integer> getValidDirections(){
         // HAUT 0 DROITE 1 BAS 2 GAUCHE 3
-        List<Integer> validDirections = new ArrayList<>();
-        if (plan[pos[0]-1][pos[1]] == 0) validDirections.add(0);
-        if (plan[pos[0]][pos[1]+1] == 0) validDirections.add(1);
-        if (plan[pos[0]+1][pos[1]] == 0) validDirections.add(2);
-        if (plan[pos[0]][pos[1]-1] == 0) validDirections.add(3);
+
+        Set<Integer> exclusions = new HashSet<>();
+        exclusions.add(4);
+        exclusions.add(5);
+
+        ArrayList<Integer> validDirections = new ArrayList<>();
+        if (!exclusions.contains(matrice[pos[0]-1][pos[1]]) && direction != 2) validDirections.add(0);
+        if (!exclusions.contains(matrice[pos[0]][pos[1]+1]) && direction != 3) validDirections.add(1);
+        if (!exclusions.contains(matrice[pos[0]+1][pos[1]]) && direction != 0) validDirections.add(2);
+        if (!exclusions.contains(matrice[pos[0]][pos[1]-1]) && direction != 2) validDirections.add(3);
         return validDirections;
     }
 
     // Détermine une direction aléatoire pour le ghost
-    public int getRandomDirection(int[][] plan) {
+    public void goRandomDirection() {
         Random rand = new Random();
-        List<Integer> validDirections = getValidDirections(plan);
-        return validDirections.get(rand.nextInt(validDirections.size()));
+        ArrayList<Integer> validDirections = getValidDirections();
+        direction = validDirections.get(rand.nextInt(validDirections.size()));
     }
 
-    public void moveLeft(){
-        this.screenCoord[0] -= speed * Gdx.graphics.getDeltaTime();
+    // Détermine la direction valide dont la case est la plus proche de la cible
+    public void goChaseDirection(int[] target) {
+        ArrayList<Integer> validDirections = getValidDirections();
+
+        double minDistance = Double.MAX_VALUE;
+        int bestDirection = -1;
+
+        for (int direction : validDirections) {
+            int[] testPos = getTestPos(direction);
+            double distance = getDistance(testPos, target);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                bestDirection = direction;
+            }
+        }
+
+        if (bestDirection != -1) {
+            direction = bestDirection;
+        }
     }
 
-    public void moveRight(){
-        this.screenCoord[0] += speed * Gdx.graphics.getDeltaTime();
+    // Fonction rapide pour tester une nouvelle position possible
+    private int[] getTestPos(int direction) {
+        int[] testPos = new int[]{pos[0], pos[1]};
+
+        switch (direction) {
+            case 0: // HAUT
+                testPos[0]--;
+                break;
+            case 1: // DROITE
+                testPos[1]++;
+                break;
+            case 2: // BAS
+                testPos[0]++;
+                break;
+            case 3: // GAUCHE
+                testPos[1]--;
+                break;
+        }
+
+        return testPos;
     }
 
-    public void moveUp(){
-        this.screenCoord[1] -= speed * Gdx.graphics.getDeltaTime();
+    // Fonction de distance entre 2 points
+    private double getDistance(int[] pos1, int[] pos2) {
+        double distance = Math.sqrt(Math.pow(pos1[0] - pos2[0], 2) + Math.pow(pos1[1] - pos2[1], 2));
+        return distance;
     }
 
-    public void moveDown(){
-        this.screenCoord[1] += speed * Gdx.graphics.getDeltaTime();
+    // Adopte une direction pour faire demi tour si possible
+    public void demiTour() {
+        int directionInv = (direction + 2) % 4; // Direction inverse
+
+        int[] invPos = getTestPos(directionInv);
+
+        // Vérifie si la case de demi tour est valide
+        if (matrice[invPos[0]][invPos[1]] != 4 && matrice[invPos[0]][invPos[1]] != 5) {
+            direction = directionInv;
+        }
+    }
+
+    // Déplacement en fonction de la direction actuelle
+    public void move(){
+        switch (direction){
+            case 0: // HAUT
+                this.screenCoord[1] += speed * Gdx.graphics.getDeltaTime();
+                setFacing(Facing.UP);
+                break;
+            case 1: // DROITE
+                this.screenCoord[0] += speed * Gdx.graphics.getDeltaTime();
+                setFacing(Facing.RIGHT);
+                break;
+            case 2: // BAS
+                this.screenCoord[1] -= speed * Gdx.graphics.getDeltaTime();
+                setFacing(Facing.DOWN);
+                break;
+            case 3: // GAUCHE
+                this.screenCoord[0] -= speed * Gdx.graphics.getDeltaTime();
+                setFacing(Facing.LEFT);
+                break;
+        }
+    }
+
+    // Vérifier si les coordonnées actuelles correspondent à un checkpoint de coordonnées matrice
+    public void checkPos() {
+        int pixelX = (int)screenCoord[0];
+        int pixelY = 930-(int)screenCoord[1]; // les Y partent du bas de les coordonnées pixel
+
+        //System.out.println("PixelX : " + pixelX + " | PixelY : " + pixelY);
+
+        // Taille d'une zone matrice
+        int zoneSize = 30;
+        // Taille du checkpoint de la zone
+        int checkpointSize = 10;
+
+        // Identification de la zone actuelle
+        int zoneX = pixelX / zoneSize;
+        int zoneY = pixelY / zoneSize;
+
+        //System.out.println("ZoneX : " + zoneX + " | ZoneY : " + zoneY);
+
+        // Coordonnées du checkpoint de la zone
+        int checkpointX = zoneX * zoneSize + (zoneSize - checkpointSize) / 2;
+        int checkpointY = zoneY * zoneSize + (zoneSize - checkpointSize) / 2;
+
+        //System.out.println("CheckpointX : " + checkpointX + " | CheckpointY : " + checkpointY);
+
+        // Vérifier si les coordonnées se trouvent dans le checkpoint
+        if (pixelX >= checkpointX && pixelX < checkpointX + checkpointSize &&
+                pixelY >= checkpointY && pixelY < checkpointY + checkpointSize) {
+            in = true;
+            pos = new int[]{zoneY, zoneX}; // Coordonnées du checkpoint (inversion des X et Y)
+            //System.out.println("Checkpoint");
+        } else {
+            in = false;
+            out = true;
+            pos = new int[]{-1, -1}; // Aucun checkpoint trouvé
+            //System.out.println("No checkpoint");
+        }
     }
 
     @Override

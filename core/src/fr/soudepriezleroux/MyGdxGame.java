@@ -12,6 +12,8 @@ import fr.soudepriezleroux.map.MatriceMap;
 
 import java.util.UUID;
 
+import static fr.soudepriezleroux.map.MatriceMap.getMatrice;
+
 public class MyGdxGame extends ApplicationAdapter {
 	private OrthographicCamera camera;
 
@@ -23,9 +25,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		EntityManager.init(camera);
 
+		MatriceMap.init();
+
 		UUID entity1 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,60,64,64, Facing.LEFT));
 		UUID entity2 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,180,64,64, Facing.UP));
-
+		UUID monGhost = EntityManager.addEntity(new Blinky("ghost", false, 1, 64, 64, 40, 230, 64, 64, Facing.UP,
+				new int[] {2, 2}, 0, 60, getMatrice()));
 
 	}
 

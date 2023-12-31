@@ -132,6 +132,14 @@ public class MatriceMap {
         }
     }
 
+    public static int[][] getMatrice() {
+        return matrice;
+    }
+
+    public static void setMatrice(int[][] matrice) {
+        MatriceMap.matrice = matrice;
+    }
+
     public static void main(String[] args) {
         // Pour faire tes tests avec la map, à enlever dans la version finale
     }

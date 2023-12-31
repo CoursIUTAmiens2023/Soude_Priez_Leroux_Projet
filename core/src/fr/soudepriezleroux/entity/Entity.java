@@ -81,4 +81,12 @@ public class Entity {
         this.screenCoord[0] = x;
         this.screenCoord[1] = y;
     }
+
+    public Facing getFacing() {
+        return facing;
+    }
+
+    public void setFacing(Facing facing) {
+        this.facing = facing;
+    }
 }
