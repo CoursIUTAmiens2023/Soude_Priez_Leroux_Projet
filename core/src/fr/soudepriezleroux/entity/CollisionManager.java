@@ -1,7 +1,5 @@
 package fr.soudepriezleroux.entity;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -36,14 +34,12 @@ public class CollisionManager {
                     if (player.getHitbox().overlaps(entity.getHitbox())) {
                         String nameClasse = entity.getClass().getSimpleName();
                         isEntity(true);
-                        if (nameClasse.equals("Ghost")) {
+
+                        if(nameClasse.equals("Ghost")) {
                             player.eatGhost();
 
-                        } else if (nameClasse.equals("Fruits")) {
-                            player.eatCheese(entity, entity.getUuid());
-
-                        } else {
-                            player.eatCheese(entity, entity.getUuid());
+                        }else {
+                            player.eatCheese(entity);
                         }
                         entity.dispose();
                         isEntity(false);
