@@ -4,10 +4,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import fr.soudepriezleroux.entity.CollisionManager;
-import fr.soudepriezleroux.entity.EntityManager;
-import fr.soudepriezleroux.entity.Facing;
-import fr.soudepriezleroux.entity.Player;
+import fr.soudepriezleroux.entity.*;
+
 import fr.soudepriezleroux.map.MapManager;
 
 import java.util.UUID;
