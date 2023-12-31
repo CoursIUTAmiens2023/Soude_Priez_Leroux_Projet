@@ -3,9 +3,7 @@ package fr.soudepriezleroux.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class Player extends Entity{
     /**
      * Score du joueur
      */
-    private int points;
+    private static int points;
 
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
@@ -53,7 +51,7 @@ public class Player extends Entity{
      * Fonction permetant le déplacement du joueur sur l'écran
      * @param screenCoord - Les coordonnées du joueur sur l'écran
      */
-    private void run(float[] screenCoord){
+    public void run(float[] screenCoord){
         if (screenCoord[1] < 931 && screenCoord[1] > 0 && screenCoord[0] > 0 && screenCoord[0] < 811){
             this.move(speed * Gdx.graphics.getDeltaTime());
         }
@@ -74,31 +72,26 @@ public class Player extends Entity{
     /**
      * Fonction qui gère l'ajout de points suite aux interactions du joueur sur les différentes entités
      * @param miamMiam - L'entité que le joueur mange
-     * @param uuidEntity - L'id de l'entity mangé
      */
-    public void eatCheese(Entity miamMiam, UUID uuidEntity){
+    public void eatCheese(Entity miamMiam){
         String name = miamMiam.getClass().getSimpleName();
-        if (!eatenObject.contains(uuidEntity)){
+        if (!eatenObject.contains(miamMiam.getUuid())){
             if (name.equals("PacGum")) {
-                eatenObject.add(uuidEntity);
                 setIsInvincible(true);
                 setTimeInvicible(System.currentTimeMillis());
-                points += ((MiniCheese) miamMiam).getPoints();
-
-            }else if(name.equals("Fruits")){
-                points += ((MiniCheese) miamMiam).getPoints();
-                eatenObject.add(uuidEntity);
-
-            } else {
-                points+= ((MiniCheese) miamMiam).getPoints();
-                eatenObject.add(uuidEntity);
-
             }
+
+            points += ((MiniCheese) miamMiam).getPoints();
+            eatenObject.add(miamMiam.getUuid());
         }
     }
 
     private static long getTimeInvicible() {
         return timeInvicible;
+    }
+
+    public static int getPoints() {
+        return points;
     }
 
     private static void setTimeInvicible(long timeInvicible) {
@@ -122,12 +115,16 @@ public class Player extends Entity{
         this.comboGhost = 0;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     @Override
     public void render(SpriteBatch spriteBatch){
 
+
         float[] screenCoord = getScreenCoord();
         run(screenCoord);
-        System.out.println(points);
 
         // Regarde le temps d'invincibilité
         // Si le temps est suppérieur
@@ -151,6 +148,7 @@ public class Player extends Entity{
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 this.facing = Facing.DOWN;
             }
+
         }
         run(getScreenCoord());
         super.render(spriteBatch);
