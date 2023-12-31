@@ -37,6 +37,8 @@ Lorsque l’on mange un Pac-Gum, il devient possible, pendant une période limit
 	Pc devant supporter OpenGL et ayant Java installé.
 
 
+Plan de test : https://onedrive.live.com/edit?id=9349208FB58E328!s8d367277a8de49ae931195d3cf0e6e5d&resid=9349208FB58E328!s8d367277a8de49ae931195d3cf0e6e5d&cid=09349208fb58e328&ithint=file%2Cxlsx&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3gvYy8wOTM0OTIwOGZiNThlMzI4L0VYZHlObzNlcUs1Smt4R1YwODhPYmwwQnFuVVF5MUJKUkZGem8yTlFxaDZKZkE_ZT1TRlRneDk&migratedtospo=true&wdo=2
+
 langue et library graphique : Java et libGDX
 Java choisi pour la maîtrise de l'équipe et libGDX car cela semble être un bon compromis entre performances, faciliter de mise en place et abondance de la documentation
 
