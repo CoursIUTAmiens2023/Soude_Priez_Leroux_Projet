@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public class EntityManager {
     //Liste de toutes les entités de notre jeu
-    @Getter
     private static ArrayList<Entity> entities = new ArrayList<>();
     //Liste de touts leurs sprites
     @Getter
@@ -50,7 +49,11 @@ public class EntityManager {
     //Suppression d'une entité de la liste
     //Ainsi que liberation des ressources
     public static void removeEntity(UUID uuid){
-        entities.forEach(entity -> entity.dispose());
+        entities.forEach(entity -> {
+            if (entity.getUuid()  == uuid){
+                entity.dispose();
+            }
+        });
         entities.removeIf(entity -> uuid == entity.getUuid());
     }
     //Suppression de toutes les entités de la liste
@@ -64,6 +67,9 @@ public class EntityManager {
         return spriteBatch;
     }
 
+    public static ArrayList<Entity> getEntities() {
+        return entities;
+    }
     //Liberation des ressources de toute les entités et du spritebatch
     public static void dispose(){
         removeAll();

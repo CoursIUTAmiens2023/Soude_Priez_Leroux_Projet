@@ -30,6 +30,7 @@ public class Entity {
     private final int animationTime = 500;
     //Frame de base de l'animation
     private int animationFrame = 0;
+    private ArrayList<Sprite> spritesBoosted;   //Sprite pour quand PacMan a mangé un fruit
     //Direction dans laquelle l'entité regarde
     protected Facing facing;
 
@@ -41,16 +42,27 @@ public class Entity {
         this.facing = facing;
 
         this.isAnimated = isAnimated;
-        hitbox = new Rectangle(x,y,width,height);
+        hitbox = new Rectangle(x-(textureSizeX/2),y,width,height);
         screenCoord = new float[]{x,y};
         textureSize = new float[]{textureSizeX,textureSizeY};
-        sprites = new ArrayList<>();
         //Recuperation des diffrentes textures pour l'animation et donne la bonne orientation
-        for (int i = 0; i < nbrFrame; i++) {
-            Sprite spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
-            spriteTemp.setRotation(facing.get());
-            sprites.add(spriteTemp);
+        sprites =  setListSprite(0, nbrFrame, prefix);
+
+        if (prefix.equals("ghost")){
+            spritesBoosted = setListSprite(nbrFrame, (nbrFrame*2), prefix);
         }
+    }
+
+    private ArrayList<Sprite> setListSprite(int start, int nbrFrame, String prefix){
+        ArrayList<Sprite> spriteArrayListTemp = new ArrayList<>();
+        for (int i = start; i < nbrFrame; i++){
+            Sprite spriteTemp;
+            spriteTemp = new Sprite(new Texture(Gdx.files.internal(prefix + "_f_"+i+".png")),0,0,16,16);
+            spriteTemp.setRotation(facing.get());
+            spriteArrayListTemp.add(spriteTemp);
+        }
+
+        return spriteArrayListTemp;
     }
 
     public void render(SpriteBatch spriteBatch){
@@ -69,11 +81,18 @@ public class Entity {
             }
         }
 
-        Sprite spriteTemp = sprites.get(animationFrame);
+        Sprite spriteTemp;
+        if (spritesBoosted != null && Player.isIsInvincible()){
+            spriteTemp = spritesBoosted.get(animationFrame);
+        } else {
+           spriteTemp = sprites.get(animationFrame);
+        }
         spriteTemp.setBounds(hitbox.x, hitbox.y,textureSize[0],textureSize[1]);
         spriteTemp.setOriginCenter();
         spriteTemp.setRotation(facing.get());
         spriteTemp.draw(spriteBatch);
+
+
     }
 
     public void dispose(){
@@ -86,10 +105,13 @@ public class Entity {
         return uuid;
     }
 
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+
     public float[] getScreenCoord() {
         return screenCoord;
     }
-
     public void setCoord(float x, float y){
         this.screenCoord[0] = x;
         this.screenCoord[1] = y;
@@ -105,15 +127,15 @@ public class Entity {
 
         switch (this.facing){
             case RIGHT:
-                if(currentX == (int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1){
+                if(currentX == (int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1){
                     this.screenCoord[0] += distance;
                     break;
                 }
                 if(currentX + 1 > 26){
                     break;
                 }
-                if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] != 4){
-                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] == 4){
+                if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] != 4){
+                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] == 4){
                         break;
                     }
                     this.screenCoord[0] += distance;
@@ -132,15 +154,15 @@ public class Entity {
                     break;
                 }
             case UP:
-                if(currentY == (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1){
+                if(currentY == (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1){
                     this.screenCoord[1] += distance;
                     break;
                 }
                 if(currentY + 1 > 30){
                     break;
                 }
-                if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][currentX] != 4){
-                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] == 4){
+                if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][currentX] != 4){
+                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] == 4){
                         break;
                     }
                     this.screenCoord[1] += distance;

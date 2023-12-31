@@ -10,6 +10,8 @@ public class MatriceMap {
     // Initialise la matrice de jeu, chaque entier représente une "case" de ma map
     // 0 = vide, 1 = point, 2 = pacgum, 3 = fruit, 4 = mur, 5 = zone fantôme
     public static void init() {
+        matrice = MapManager.getData();
+        /*
         matrice = new int[][]{
                 {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
                 {4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4},
@@ -42,7 +44,8 @@ public class MatriceMap {
                 {4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4},
                 {4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4},
                 {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}
-        };
+        };*/
+
     }
 
     // Trouve l'itinéraire le plus rapide entre 2 coordonnées de la matrice

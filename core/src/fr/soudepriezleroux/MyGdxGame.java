@@ -1,21 +1,18 @@
 package fr.soudepriezleroux;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import fr.soudepriezleroux.entity.EntityManager;
-import fr.soudepriezleroux.entity.Facing;
-import fr.soudepriezleroux.entity.ghost.Blinky;
-import fr.soudepriezleroux.entity.ghost.Ghost;
-import fr.soudepriezleroux.map.MatriceMap;
+import fr.soudepriezleroux.entity.*;
+import fr.soudepriezleroux.map.MapManager;
 
 import java.util.UUID;
-import fr.soudepriezleroux.entity.Player;
-import fr.soudepriezleroux.map.MapManager;
 
 public class MyGdxGame extends ApplicationAdapter {
 	//Creation de la camera qui permet de voir le jeu
 	private OrthographicCamera camera;
+	private Music bgMusic;
 
 	@Override
 	public void create () {
@@ -29,7 +26,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		MapManager.init();
 
 		//Creation du player au coordonnées X Y de la fenetre
-		EntityManager.addEntity(new Player("player",false,2,16,16,405,405,16,16, Facing.UP));
+		UUID player = EntityManager.addEntity(new Player("player",false,2,16,16,395,210,16,16, Facing.UP));
+
+		CollisionManager.init(EntityManager.getEntities(), player);
 	}
 
 	//Methode call a chaque frame
@@ -41,6 +40,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		MapManager.render();
 		//Rendu de toute les entités
 		EntityManager.render();
+		CollisionManager.render();
 		//Update de la camera
 		camera.update(true);
 	}
