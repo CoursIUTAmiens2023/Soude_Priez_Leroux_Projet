@@ -3,9 +3,7 @@ package fr.soudepriezleroux.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +36,16 @@ public class Player extends Entity{
      */
     private int points;
 
+    /**
+     * Points de vie du joueur
+     */
+    private int lives;
+
+    /**
+     * Position de début du pacMan
+     */
+    private float[]startCoord;
+
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
@@ -47,6 +55,8 @@ public class Player extends Entity{
         points = 0;
         comboGhost = 0;
         eatenObject = new ArrayList<>();
+        lives = 3;
+        startCoord = new float[]{x,y};
     }
 
     /**
@@ -122,12 +132,15 @@ public class Player extends Entity{
         this.comboGhost = 0;
     }
 
+    public void hitGhost(){
+        setLives(lives-1);
+    }
+
     @Override
     public void render(SpriteBatch spriteBatch){
 
         float[] screenCoord = getScreenCoord();
         run(screenCoord);
-        System.out.println(points);
 
         // Regarde le temps d'invincibilité
         // Si le temps est suppérieur
@@ -154,5 +167,17 @@ public class Player extends Entity{
         }
         run(getScreenCoord());
         super.render(spriteBatch);
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    private void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public float[] getStartCoord() {
+        return startCoord;
     }
 }

@@ -73,6 +73,21 @@ public class EntityManager {
         });
         entities.removeIf(entity -> uuid == entity.getUuid());
     }
+
+    /**
+     * Cherche une entité dans la liste des entités du jeu
+     * @param uuid L'indentifiant de l'entité a chercher
+     * @return Une entity si elle existe | Null si elle n'existe pas
+     */
+    public static Entity getEntity(UUID uuid){
+        for (Entity entity:entities){
+            if (entity.getUuid() == uuid){
+                return entity;
+            }
+        }
+        return null;
+    }
+
     //Suppression de toutes les entités de la liste
     public static void removeAll(){
         for (Entity entity:entities) {

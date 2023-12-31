@@ -5,13 +5,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.soudepriezleroux.entity.*;
-import fr.soudepriezleroux.map.MapManager;
-import fr.soudepriezleroux.entity.Entity;
-import fr.soudepriezleroux.entity.EntityManager;
-import fr.soudepriezleroux.entity.Facing;
 import fr.soudepriezleroux.entity.ghost.Blinky;
-import fr.soudepriezleroux.entity.ghost.Ghost;
-import fr.soudepriezleroux.map.MatriceMap;
+import fr.soudepriezleroux.map.MapManager;
 
 import java.util.UUID;
 
