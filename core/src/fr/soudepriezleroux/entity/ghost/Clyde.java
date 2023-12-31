@@ -60,7 +60,7 @@ public class Clyde extends Ghost{
                 int[] pos = getPos();
                 if (pos[0] == 11 && pos[1] == 13) setReady(true);
                 else if (isIn() && isOut()) {
-                    goChaseDirection(new int[]{11, 13});
+                    goChaseDirectionOut();
                     setOut(false);
                 }
                 move();

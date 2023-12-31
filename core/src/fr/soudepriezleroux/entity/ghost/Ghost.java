@@ -150,6 +150,20 @@ public abstract class Ghost extends Entity {
         return validDirections;
     }
 
+    public ArrayList<Integer> getValidDirectionsOut(){
+        // HAUT 0 DROITE 1 BAS 2 GAUCHE 3
+
+        Set<Integer> exclusions = new HashSet<>();
+        exclusions.add(4);
+
+        ArrayList<Integer> validDirections = new ArrayList<>();
+        if (!exclusions.contains(matrice[pos[0]-1][pos[1]]) && direction != 2) validDirections.add(0);
+        if (!exclusions.contains(matrice[pos[0]][pos[1]+1]) && direction != 3) validDirections.add(1);
+        if (!exclusions.contains(matrice[pos[0]+1][pos[1]]) && direction != 0) validDirections.add(2);
+        if (!exclusions.contains(matrice[pos[0]][pos[1]-1]) && direction != 1) validDirections.add(3);
+        return validDirections;
+    }
+
     // Détermine une direction aléatoire pour le ghost
     public void goRandomDirection() {
         Random rand = new Random();
@@ -160,6 +174,30 @@ public abstract class Ghost extends Entity {
     // Détermine la direction valide dont la case est la plus proche de la cible
     public void goChaseDirection(int[] target) {
         ArrayList<Integer> validDirections = getValidDirections();
+
+        double minDistance = Double.MAX_VALUE;
+        int bestDirection = -1;
+
+        for (int direction : validDirections) {
+            int[] testPos = getTestPos(direction);
+            double distance = getDistance(testPos, target);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                bestDirection = direction;
+            }
+        }
+
+        if (bestDirection != -1) {
+            direction = bestDirection;
+        }else{
+            demiTour();
+        }
+    }
+
+    public void goChaseDirectionOut() {
+        int[] target = new int[]{11, 13};
+        ArrayList<Integer> validDirections = getValidDirectionsOut();
 
         double minDistance = Double.MAX_VALUE;
         int bestDirection = -1;
@@ -214,8 +252,10 @@ public abstract class Ghost extends Entity {
         int[] invPos = getTestPos(directionInv);
 
         // Vérifie si la case de demi tour est valide
-        if (matrice[invPos[0]][invPos[1]] != 4 && matrice[invPos[0]][invPos[1]] != 5) {
-            direction = directionInv;
+        if (invPos[0] >= 0 && invPos[0] <= 30 && invPos[1] >= 0 && invPos[1] <= 26 ) {
+            if (matrice[invPos[0]][invPos[1]] != 4 && matrice[invPos[0]][invPos[1]] != 5) {
+                direction = directionInv;
+            }
         }
     }
 
@@ -247,7 +287,7 @@ public abstract class Ghost extends Entity {
         // Taille d'une zone matrice
         int zoneSize = 30;
         // Taille du checkpoint de la zone
-        int checkpointSize = 20;
+        int checkpointSize = 4;
 
         // Identification de la zone actuelle
         int zoneX = pixelX / zoneSize;

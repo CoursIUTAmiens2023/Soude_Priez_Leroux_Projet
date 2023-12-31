@@ -34,13 +34,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		EntityManager.init(camera);
 		MapManager.init();
 
-		UUID monBlinky = EntityManager.addEntity(new Blinky("blinky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+		UUID monBlinky = EntityManager.addEntity(new Blinky("blinky", true, 1, 24, 24, 3+30*13, 3+30*(30-11), 24, 24, Facing.DOWN,
 				new int[] {2, 2}, -1, 100, getMatrice()));
-		UUID monPinky = EntityManager.addEntity(new Pinky("pinky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+		UUID monPinky = EntityManager.addEntity(new Pinky("pinky", true, 1, 24, 24, 3+30*13, 3+30*(30-14), 24, 24, Facing.DOWN,
 				new int[] {2, 2}, -1, 100, getMatrice()));
-		UUID monInky = EntityManager.addEntity(new Inky("inky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+		UUID monInky = EntityManager.addEntity(new Inky("inky", true, 1, 24, 24, 3+30*11, 3+30*(30-14), 24, 24, Facing.DOWN,
 				new int[] {2, 2}, -1, 100, getMatrice()));
-		UUID monClyde = EntityManager.addEntity(new Clyde("clyde", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
+		UUID monClyde = EntityManager.addEntity(new Clyde("clyde", true, 1, 24, 24, 3+30*15, 3+30*(30-14), 24, 24, Facing.DOWN,
 				new int[] {2, 2}, -1, 100, getMatrice()));
 
 		//Creation du player au coordonnées X Y de la fenetre
