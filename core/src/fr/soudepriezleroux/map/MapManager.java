@@ -1,6 +1,8 @@
 package fr.soudepriezleroux.map;
 
-import fr.soudepriezleroux.entity.EntityManager;
+import fr.soudepriezleroux.entity.*;
+
+import java.util.UUID;
 
 public class MapManager {
 
@@ -10,6 +12,22 @@ public class MapManager {
     //Initialisation de la dite map
     public static void init(){
         map = new Map();
+        for (int i = 0; i < 27; i++) {
+            for (int j = 0; j < 31; j++) {
+                switch (getData()[j][i]){
+                    case 1:
+                        EntityManager.addEntity(new MiniCheese("pacGum", 5, false, 1, 12,12, i*30+10, 910 - j*30, 12,12, Facing.LEFT));
+                        break;
+                    case 2:
+                        EntityManager.addEntity(new PacGum("pacGum", 50, false, 1, 24,24, i*30+5, 905 - j*30, 24,24, Facing.LEFT));
+                        break;
+                    case 3:
+                        EntityManager.addEntity(new Fruits("cerise", false, 1, 24,24, i*30+5, 905 - j*30, 24,24, Facing.DOWN));
+                        break;
+
+                }
+            }
+        }
     }
 
     //Rendu de la map
@@ -45,7 +63,7 @@ public class MapManager {
                 {4,1,1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1,1,1,4},
                 {4,1,4,4,4,4,1,4,4,4,4,4,1,4,1,4,4,4,4,4,1,4,4,4,4,1,4},
                 {4,1,4,4,4,4,1,4,4,4,4,4,1,4,1,4,4,4,4,4,1,4,4,4,4,1,4},
-                {4,2,1,1,4,4,1,1,1,1,1,1,1,6,1,1,1,1,1,1,1,4,4,1,1,2,4},
+                {4,2,1,1,4,4,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,4,4,1,1,2,4},
                 {4,4,4,1,4,4,1,4,4,1,4,4,4,4,4,4,4,1,4,4,1,4,4,1,4,4,4},
                 {4,4,4,1,4,4,1,4,4,1,4,4,4,4,4,4,4,1,4,4,1,4,4,1,4,4,4},
                 {4,1,1,1,1,1,1,4,4,1,1,1,1,4,1,1,1,1,4,4,1,1,1,1,1,1,4},

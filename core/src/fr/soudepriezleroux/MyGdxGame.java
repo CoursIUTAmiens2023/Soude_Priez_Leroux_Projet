@@ -1,21 +1,13 @@
 package fr.soudepriezleroux;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import fr.soudepriezleroux.entity.EntityManager;
-import fr.soudepriezleroux.entity.Facing;
-import fr.soudepriezleroux.map.MatriceMap;
 import fr.soudepriezleroux.entity.*;
-
-import java.util.List;
-import java.util.UUID;
-import fr.soudepriezleroux.entity.Player;
 import fr.soudepriezleroux.map.MapManager;
+
+import java.util.UUID;
 
 public class MyGdxGame extends ApplicationAdapter {
 	//Creation de la camera qui permet de voir le jeu
@@ -30,26 +22,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.update(true);
 
 		//Initialisation des manager
-		Map.init(camera);
 		EntityManager.init(camera);
 		MapManager.init();
 
 		//Creation du player au coordonnées X Y de la fenetre
-		EntityManager.addEntity(new Player("player",false,2,16,16,405,405,16,16, Facing.UP));
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("bgMusic.mp3"));
-		bgMusic.setLooping(true);
-		bgMusic.play();
-
-
-		UUID PacGum = EntityManager.addEntity(new PacGum("pacGum", 50, false, 1, 32,32, 700, 300, 32,32, Facing.LEFT));
-		UUID cerise = EntityManager.addEntity(new Fruits("cerise", false, 1, 32,32, 762, 599, 32,32, Facing.DOWN));
-		UUID fraise = EntityManager.addEntity(new Fruits("fraise", false, 1, 32,32, 862, 699, 32,32, Facing.DOWN));
-		UUID orange = EntityManager.addEntity(new Fruits("orange", false, 1, 32,32, 962, 899, 32,32, Facing.DOWN));
-		UUID pomme = EntityManager.addEntity(new Fruits("pomme", false, 1, 32,32, 662, 499, 32,32, Facing.DOWN));
-
-		UUID player = EntityManager.addEntity(new Player("player",true,2,32,32,60,60,32,32, Facing.LEFT));
-
-		new Map("map", 577, 0, 859, 950, 1369, 1513);
+		UUID player = EntityManager.addEntity(new Player("player",false,2,16,16,395,210,16,16, Facing.UP));
 
 		CollisionManager.init(EntityManager.getEntities(), player);
 	}

@@ -42,7 +42,7 @@ public class Player extends Entity{
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
 
-        this.speed = 200;
+        this.speed = 50;
         isInvincible = false;
         points = 0;
         comboGhost = 0;

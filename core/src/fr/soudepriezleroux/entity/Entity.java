@@ -127,15 +127,15 @@ public class Entity {
 
         switch (this.facing){
             case RIGHT:
-                if(currentX == (int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1){
+                if(currentX == (int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1){
                     this.screenCoord[0] += distance;
                     break;
                 }
                 if(currentX + 1 > 26){
                     break;
                 }
-                if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] != 4){
-                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] == 4){
+                if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] != 4){
+                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] == 4){
                         break;
                     }
                     this.screenCoord[0] += distance;
@@ -154,15 +154,15 @@ public class Entity {
                     break;
                 }
             case UP:
-                if(currentY == (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1){
+                if(currentY == (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1){
                     this.screenCoord[1] += distance;
                     break;
                 }
                 if(currentY + 1 > 30){
                     break;
                 }
-                if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][currentX] != 4){
-                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0]) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0]) / 30) - 1] == 4){
+                if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][currentX] != 4){
+                    if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] == 4){
                         break;
                     }
                     this.screenCoord[1] += distance;
