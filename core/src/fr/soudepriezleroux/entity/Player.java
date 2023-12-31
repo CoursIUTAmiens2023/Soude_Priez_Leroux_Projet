@@ -34,7 +34,7 @@ public class Player extends Entity{
     /**
      * Score du joueur
      */
-    private int points;
+    private static int points;
 
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
@@ -90,7 +90,7 @@ public class Player extends Entity{
         return timeInvicible;
     }
 
-    public int getPoints() {
+    public static int getPoints() {
         return points;
     }
 
@@ -121,6 +121,7 @@ public class Player extends Entity{
 
     @Override
     public void render(SpriteBatch spriteBatch){
+
 
         float[] screenCoord = getScreenCoord();
         run(screenCoord);

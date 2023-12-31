@@ -40,7 +40,11 @@ public class CollisionManager {
 
                         }else {
                             player.eatCheese(entity);
+                            if (nameClasse.equals("Fruits")){
+                                Fruits.resetFruit();
+                            }
                         }
+
                         entity.dispose();
                         isEntity(false);
                     }

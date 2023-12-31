@@ -38,6 +38,10 @@ public class gameTest {
      */
     private static String invicibleString = "Test Invincibilite Pac-Man : ";
 
+    private static String metGhostString = "Test rencontre Player-Ghost : ";
+
+    private static String wallWalkedString = "Test arret au niveau d'un mur : ";
+
     /**
      * Liste des entités que Pac-Man peut manger (sert pour la création des entités ajoutant des points au score du joueur
      */
@@ -126,6 +130,33 @@ public class gameTest {
     }
 
     /**
+     * Test la rencontre entre Player et un ghost
+     * @return True si le joueur revient bien au point de départ | False s'il ne revient pas
+     */
+    private static boolean metGhost(){
+       try {
+           throw new Exception();
+       }catch (Exception e){
+           return false;
+       }
+    }
+
+    private static boolean wallWalked(float distance){
+        try {
+            Player joueur = (Player) EntityManager.getEntity(
+                    EntityManager.addEntity(
+                            new Player("player",true,2,32,32,60,60,32,32, Facing.LEFT)));
+
+            if(joueur.move(distance)){
+                return true;
+            }
+            throw new Exception();
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    /**
      * Test invincibilité Pac-Man
      * @return True si le joueur est invincible après l'ingestion d'un Pac-Gum | False s'il ne l'est pas
      */
@@ -180,6 +211,22 @@ public class gameTest {
         //Test Invincibilité joueur
         System.out.println(invicibleString + pacManIsInvincible());
         System.out.println(separateur);
+
+        //Test metGhost
+        System.out.println(metGhostString + metGhost());
+        System.out.println(separateur);
+
+        //Test rencontre mur
+        if(wallWalked((float) 1)){
+            System.out.println(wallWalkedString + "true" + " (true Attendu)");
+        }else {
+            System.out.println(wallWalkedString + "false " + "(true Attendu)");
+        }
+        if(!wallWalked((float) 110)){
+            System.out.println(wallWalkedString + "true" + " (false Attendu)");
+        }else {
+            System.out.println(wallWalkedString + "false " + "(false Attendu)");
+        }
     }
 
     /**
