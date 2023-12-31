@@ -3,7 +3,6 @@ package fr.soudepriezleroux.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.soudepriezleroux.entity.ghost.Ghost;
@@ -39,6 +38,16 @@ public class Player extends Entity{
      */
     private int points;
 
+    /**
+     * Points de vie du joueur
+     */
+    private int lives;
+
+    /**
+     * Position de début du pacMan
+     */
+    private float[]startCoord;
+
     private int centreX;
 
     private int centreY;
@@ -54,6 +63,8 @@ public class Player extends Entity{
         points = 0;
         comboGhost = 0;
         eatenObject = new ArrayList<>();
+        lives = 3;
+        startCoord = new float[]{x,y};
         centreX = (int)width/2;
         centreY = (int)height/2;
         pointsMiam = 0;
@@ -135,6 +146,10 @@ public class Player extends Entity{
         this.comboGhost = 0;
     }
 
+    public void hitGhost(){
+        setLives(lives-1);
+    }
+
     public int getCentreX() {
         return centreX;
     }
@@ -194,5 +209,17 @@ public class Player extends Entity{
         }
         run(getScreenCoord());
         super.render(spriteBatch);
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    private void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public float[] getStartCoord() {
+        return startCoord;
     }
 }

@@ -11,6 +11,8 @@ import fr.soudepriezleroux.entity.Entity;
 import fr.soudepriezleroux.entity.EntityManager;
 import fr.soudepriezleroux.entity.Facing;
 import fr.soudepriezleroux.map.MatriceMap;
+import fr.soudepriezleroux.entity.ghost.Blinky;
+import fr.soudepriezleroux.map.MapManager;
 
 import java.util.UUID;
 
