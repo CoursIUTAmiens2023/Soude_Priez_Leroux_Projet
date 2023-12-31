@@ -15,12 +15,28 @@ public class EntityManager {
     @Getter
     private static SpriteBatch spriteBatch = new SpriteBatch();
 
+    private static Player player;
+
     //Initialisation les sprites avec la camera
     public static void init(Camera camera){
         entities = new ArrayList<>();
         spriteBatch = new SpriteBatch();
 
         spriteBatch.setProjectionMatrix(camera.combined);
+    }
+
+    public static void setPlayer(UUID uuid){
+        entities.forEach(entity -> {
+            if (entity.getUuid()  == uuid){
+                player = (Player) entity;
+            }
+        });
+    }
+
+    public static int[] getPlayerPos(){
+        int currentX = (int) Math.ceil(player.getScreenCoord()[0] / 30) - 1;
+        int currentY = (int) Math.ceil(player.getScreenCoord()[1] / 30) - 1;
+        return new int[]{currentX, currentY};
     }
 
     //Ajout d'une entité a la liste

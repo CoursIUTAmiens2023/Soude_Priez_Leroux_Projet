@@ -12,6 +12,7 @@ public class MapManager {
     //Initialisation de la dite map
     public static void init(){
         map = new Map();
+        MatriceMap.init();
         for (int i = 0; i < 27; i++) {
             for (int j = 0; j < 31; j++) {
                 switch (getData()[j][i]){

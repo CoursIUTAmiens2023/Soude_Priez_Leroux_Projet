@@ -34,7 +34,7 @@ public class Blinky extends Ghost{
             if (isIn() && isOut()) {
                 switch (mode) {
                     case 0:
-                        updateChaseTarget(/*getPlayerPos()*/new int[]{0, 0});
+                        updateChaseTarget(EntityManager.getPlayerPos());
                         goChaseDirection(chaseTarget);
                         break;
                     case 1:

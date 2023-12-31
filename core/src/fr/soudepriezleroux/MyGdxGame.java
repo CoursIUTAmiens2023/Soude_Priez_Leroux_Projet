@@ -33,15 +33,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		EntityManager.init(camera);
 		MapManager.init();
 
-		MatriceMap.init();
+		UUID monGhost = EntityManager.addEntity(new Blinky("blinky", true, 1, 24, 24, 40, 230, 24, 24, Facing.UP,
+				new int[] {2, 2}, 0, 100, getMatrice()));
 
-		UUID entity1 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,60,64,64, Facing.LEFT));
-		UUID entity2 = EntityManager.addEntity(new Entity("player",true,2,64,64,60,180,64,64, Facing.UP));
-		UUID monGhost = EntityManager.addEntity(new Blinky("ghost", false, 1, 64, 64, 40, 230, 64, 64, Facing.UP,
-				new int[] {2, 2}, 0, 60, getMatrice()));
 		//Creation du player au coordonnées X Y de la fenetre
 		UUID player = EntityManager.addEntity(new Player("player",false,2,16,16,395,210,16,16, Facing.UP));
-
+		EntityManager.setPlayer(player);
 		CollisionManager.init(EntityManager.getEntities(), player);
 	}
 
