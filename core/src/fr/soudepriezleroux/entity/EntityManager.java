@@ -2,6 +2,8 @@ package fr.soudepriezleroux.entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import fr.soudepriezleroux.entity.ghost.Blinky;
+import fr.soudepriezleroux.entity.ghost.Ghost;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -15,11 +17,86 @@ public class EntityManager {
     @Getter
     private static SpriteBatch spriteBatch = new SpriteBatch();
 
+    private static Player player;
+
+    private static Blinky blinky;
+
+    private static ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+
     //Initialisation les sprites avec la camera
     public static void init(Camera camera){
         entities = new ArrayList<>();
         spriteBatch = new SpriteBatch();
+
         spriteBatch.setProjectionMatrix(camera.combined);
+    }
+
+    public static void setPlayer(UUID uuid){
+        entities.forEach(entity -> {
+            if (entity.getUuid()  == uuid){
+                player = (Player) entity;
+            }
+        });
+    }
+
+    public static void setBlinky(UUID uuid){
+        entities.forEach(entity -> {
+            if (entity.getUuid()  == uuid){
+                blinky = (Blinky) entity;
+            }
+        });
+    }
+
+    public static void addGhost(UUID uuid){
+        entities.forEach(entity -> {
+            if (entity.getUuid()  == uuid){
+                ghosts.add((Ghost) entity);
+            }
+        });
+    }
+
+    public static int[] getPlayerPos(){
+        int pixelX = (int)player.getScreenCoord()[0]+ player.getCentreX();
+        int pixelY = 930-((int)player.getScreenCoord()[1]+ player.getCentreY());
+
+        // Taille d'une zone matrice
+        int zoneSize = 30;
+
+        // Identification de la zone actuelle
+        int zoneX = pixelX / zoneSize;
+        int zoneY = pixelY / zoneSize;
+
+        return new int[]{zoneY, zoneX};
+    }
+
+    public static int[] getBlinkyPos(){
+        int pixelX = (int)blinky.getScreenCoord()[0]+ blinky.getCentreX();
+        int pixelY = 930-((int)blinky.getScreenCoord()[1]+ blinky.getCentreY());
+
+        // Taille d'une zone matrice
+        int zoneSize = 30;
+
+        // Identification de la zone actuelle
+        int zoneX = pixelX / zoneSize;
+        int zoneY = pixelY / zoneSize;
+
+        return new int[]{zoneY, zoneX};
+    }
+
+    public static Facing getPlayerFacing(){
+        return player.getFacing();
+    }
+
+    public static int getPointsMiam(){
+        return player.getPointsMiam();
+    }
+
+    public static ArrayList<Ghost> getGhosts() {
+        return ghosts;
+    }
+
+    public static void setGhosts(ArrayList<Ghost> ghosts) {
+        EntityManager.ghosts = ghosts;
     }
 
     //Ajout d'une entité a la liste
@@ -37,6 +114,7 @@ public class EntityManager {
         return NewUuids;
     }
 
+
     //Methode de rendu pour faire le rendu de chaque entité du jeu
     public static void render(){
         spriteBatch.begin();
@@ -44,6 +122,10 @@ public class EntityManager {
             entity.render(spriteBatch);
         }
         spriteBatch.end();
+    }
+
+    public static Player getPlayer() {
+        return player;
     }
 
     //Suppression d'une entité de la liste
@@ -55,16 +137,6 @@ public class EntityManager {
             }
         });
         entities.removeIf(entity -> uuid == entity.getUuid());
-    }
-    //Suppression de toutes les entités de la liste
-    public static void removeAll(){
-        for (Entity entity:entities) {
-            EntityManager.removeEntity(entity.getUuid());
-        }
-    }
-
-    public static SpriteBatch getBatch(){
-        return spriteBatch;
     }
 
     /**
@@ -80,6 +152,22 @@ public class EntityManager {
         }
         return null;
     }
+
+    //Suppression de toutes les entités de la liste
+    public static void removeAll(){
+        for (Entity entity:entities) {
+            EntityManager.removeEntity(entity.getUuid());
+        }
+    }
+
+    public static void resetGhosts(){
+        ghosts.clear();
+    }
+
+    public static SpriteBatch getBatch(){
+        return spriteBatch;
+    }
+
 
     public static ArrayList<Entity> getEntities() {
         return entities;
