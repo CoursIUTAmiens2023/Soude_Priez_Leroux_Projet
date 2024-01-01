@@ -13,8 +13,11 @@ import fr.soudepriezleroux.entity.Facing;
 import fr.soudepriezleroux.entity.ghost.Blinky;
 import fr.soudepriezleroux.entity.CollisionManager;
 import fr.soudepriezleroux.entity.Player;
-
+import fr.soudepriezleroux.map.MapManager;
 import java.util.UUID;
+import fr.soudepriezleroux.entity.ghost.*;
+import fr.soudepriezleroux.entity.ghost.Blinky;
+
 
 import static fr.soudepriezleroux.map.MatriceMap.getMatrice;
 
