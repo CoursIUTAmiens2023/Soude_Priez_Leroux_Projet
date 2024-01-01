@@ -91,8 +91,6 @@ public class Entity {
         spriteTemp.setOriginCenter();
         spriteTemp.setRotation(facing.get());
         spriteTemp.draw(spriteBatch);
-
-
     }
 
     public void dispose(){
@@ -115,6 +113,14 @@ public class Entity {
     public void setCoord(float x, float y){
         this.screenCoord[0] = x;
         this.screenCoord[1] = y;
+    }
+
+    public Facing getFacing() {
+        return facing;
+    }
+
+    public void setFacing(Facing facing) {
+        this.facing = facing;
     }
 
     public boolean move(float distance){

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import fr.soudepriezleroux.entity.ghost.Ghost;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,22 @@ public class Player extends Entity{
      */
     private static int points;
 
+    /**
+     * Points de vie du joueur
+     */
+    private int lives;
+
+    /**
+     * Position de début du pacMan
+     */
+    private float[]startCoord;
+
+    private int centreX;
+
+    private int centreY;
+
+    private int pointsMiam;
+
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
@@ -45,6 +62,11 @@ public class Player extends Entity{
         points = 0;
         comboGhost = 0;
         eatenObject = new ArrayList<>();
+        lives = 3;
+        startCoord = new float[]{x,y};
+        centreX = (int)width/2;
+        centreY = (int)height/2;
+        pointsMiam = 0;
     }
 
     /**
@@ -78,11 +100,17 @@ public class Player extends Entity{
         if (!eatenObject.contains(miamMiam.getUuid())){
             if (name.equals("PacGum")) {
                 setIsInvincible(true);
+                for (Ghost ghost : EntityManager.getGhosts()){
+                    ghost.setFrightened();
+                }
                 setTimeInvicible(System.currentTimeMillis());
             }
-
-            points += ((MiniCheese) miamMiam).getPoints();
+            int ptsTemp = ((MiniCheese) miamMiam).getPoints();
+            points += ptsTemp;
             eatenObject.add(miamMiam.getUuid());
+            if (ptsTemp == 10){
+                pointsMiam++;
+            }
         }
     }
 
@@ -119,9 +147,36 @@ public class Player extends Entity{
         this.points = points;
     }
 
+    public void hitGhost(){
+        setLives(lives-1);
+    }
+
+    public int getCentreX() {
+        return centreX;
+    }
+
+    public void setCentreX(int centreX) {
+        this.centreX = centreX;
+    }
+
+    public int getCentreY() {
+        return centreY;
+    }
+
+    public void setCentreY(int centreY) {
+        this.centreY = centreY;
+    }
+
+    public int getPointsMiam() {
+        return pointsMiam;
+    }
+
+    public void setPointsMiam(int pointsMiam) {
+        this.pointsMiam = pointsMiam;
+    }
+
     @Override
     public void render(SpriteBatch spriteBatch){
-
 
         float[] screenCoord = getScreenCoord();
         run(screenCoord);
@@ -130,6 +185,9 @@ public class Player extends Entity{
         // Si le temps est suppérieur
         if (System.currentTimeMillis() - getTimeInvicible() > 10000) {
             setIsInvincible(false);
+            for (Ghost ghost : EntityManager.getGhosts()){
+                ghost.setChase();
+            }
             resetComboGhost();
         }
 
@@ -148,9 +206,20 @@ public class Player extends Entity{
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 this.facing = Facing.DOWN;
             }
-
         }
         run(getScreenCoord());
         super.render(spriteBatch);
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    private void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public float[] getStartCoord() {
+        return startCoord;
     }
 }

@@ -32,19 +32,29 @@ public class CollisionManager {
             for (Entity entity : entities) {
                 if (player != entity) {
                     if (player.getHitbox().overlaps(entity.getHitbox())) {
-                        String nameClasse = entity.getClass().getSimpleName();
+                        String nameClasse = entity.getClass().getSuperclass().getSimpleName();
                         isEntity(true);
-
-                        if(nameClasse.equals("Ghost")) {
-                            player.eatGhost();
-
-                        }else {
+                        if (nameClasse.equals("Ghost") ) {
+                            if (Player.isIsInvincible()){
+                                player.eatGhost();
+                                //Reste de la position du ghost
+                                isEntity(false);
+                            }else {
+                                player.hitGhost();
+                                if (player.getLives() != 0){
+                                    float[] newCoord = player.getStartCoord();
+                                    player.setCoord(newCoord[0], newCoord[1]);
+                                    //Reset des positions des ghosts
+                                }
+                            }
+                            isEntity(false);
+                            return;
+                        } else {
                             player.eatCheese(entity);
                             if (nameClasse.equals("Fruits")){
                                 Fruits.resetFruit();
                             }
                         }
-
                         entity.dispose();
                         isEntity(false);
                     }
