@@ -114,6 +114,7 @@ public class EntityManager {
         return NewUuids;
     }
 
+
     //Methode de rendu pour faire le rendu de chaque entité du jeu
     public static void render(){
         spriteBatch.begin();
@@ -121,6 +122,10 @@ public class EntityManager {
             entity.render(spriteBatch);
         }
         spriteBatch.end();
+    }
+
+    public static Player getPlayer() {
+        return player;
     }
 
     //Suppression d'une entité de la liste
@@ -153,6 +158,10 @@ public class EntityManager {
         for (Entity entity:entities) {
             EntityManager.removeEntity(entity.getUuid());
         }
+    }
+
+    public static void resetGhosts(){
+        ghosts.clear();
     }
 
     public static SpriteBatch getBatch(){

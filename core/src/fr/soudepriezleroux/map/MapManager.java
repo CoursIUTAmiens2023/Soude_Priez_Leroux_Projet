@@ -44,7 +44,8 @@ public class MapManager {
     }
 
     public static void spawnFuit(){
-        int pointsPlayer = Player.getPoints();
+        Player joueur = EntityManager.getPlayer();
+        int pointsPlayer = joueur.getPoints();
         if (fruitCompteur != 2){
             if (pointsPlayer == 70 || pointsPlayer > 170){
 

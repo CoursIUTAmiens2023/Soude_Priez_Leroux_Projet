@@ -16,7 +16,6 @@ public class Entity {
     private final UUID uuid;
     //Liste des textures de l'entité
     private final ArrayList<Sprite> sprites;
-
     private final Rectangle hitbox;
     //Coordonées sur l'ecran de l'entité
     protected float[] screenCoord;
@@ -82,7 +81,7 @@ public class Entity {
         }
 
         Sprite spriteTemp;
-        if (spritesBoosted != null && Player.isIsInvincible()){
+        if (spritesBoosted != null && ((Player) EntityManager.getEntity(this.getUuid())).isIsInvincible()){
             spriteTemp = spritesBoosted.get(animationFrame);
         } else {
            spriteTemp = sprites.get(animationFrame);

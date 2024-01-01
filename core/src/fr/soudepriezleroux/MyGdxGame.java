@@ -22,7 +22,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	//Creation de la camera qui permet de voir le jeu
 	private OrthographicCamera camera;
 	private Music bgMusic;
-	private Boolean onTest = false;
+	private static Boolean onTest = true;
 
 	@Override
 	public void create () {
@@ -86,5 +86,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		EntityManager.dispose();
+	}
+
+	public static Boolean getOnTest() {
+		return onTest;
 	}
 }
