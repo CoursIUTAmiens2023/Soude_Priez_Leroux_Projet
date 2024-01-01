@@ -48,15 +48,15 @@ public class CollisionManager {
                                 }
                             }
                             isEntity(false);
+                            return;
                         } else {
                             player.eatCheese(entity);
                             if (nameClasse.equals("Fruits")){
                                 Fruits.resetFruit();
                             }
-                            entity.dispose();
-                            isEntity(false);
                         }
-
+                        entity.dispose();
+                        isEntity(false);
                     }
                 }
             }

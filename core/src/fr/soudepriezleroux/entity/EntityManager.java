@@ -159,6 +159,7 @@ public class EntityManager {
         return spriteBatch;
     }
 
+
     public static ArrayList<Entity> getEntities() {
         return entities;
     }
