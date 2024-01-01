@@ -48,11 +48,11 @@ public class CollisionManager {
                             }
                             isEntity(false);
                             return;
-                        } else if (nameClasse.equals("Fruits")) {
-                            player.eatCheese(entity, entity.getUuid());
-
                         } else {
-                            player.eatCheese(entity, entity.getUuid());
+                            player.eatCheese(entity);
+                            if (nameClasse.equals("Fruits")){
+                                Fruits.resetFruit();
+                            }
                         }
                         entity.dispose();
                         isEntity(false);

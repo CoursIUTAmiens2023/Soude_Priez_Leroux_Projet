@@ -36,7 +36,7 @@ public class Player extends Entity{
     /**
      * Score du joueur
      */
-    private int points;
+    private static int points;
 
     /**
      * Points de vie du joueur
@@ -74,7 +74,7 @@ public class Player extends Entity{
      * Fonction permetant le déplacement du joueur sur l'écran
      * @param screenCoord - Les coordonnées du joueur sur l'écran
      */
-    private void run(float[] screenCoord){
+    public void run(float[] screenCoord){
         if (screenCoord[1] < 931 && screenCoord[1] > 0 && screenCoord[0] > 0 && screenCoord[0] < 811){
             this.move(speed * Gdx.graphics.getDeltaTime());
         }
@@ -95,27 +95,21 @@ public class Player extends Entity{
     /**
      * Fonction qui gère l'ajout de points suite aux interactions du joueur sur les différentes entités
      * @param miamMiam - L'entité que le joueur mange
-     * @param uuidEntity - L'id de l'entity mangé
      */
-    public void eatCheese(Entity miamMiam, UUID uuidEntity){
+    public void eatCheese(Entity miamMiam){
         String name = miamMiam.getClass().getSimpleName();
-        if (!eatenObject.contains(uuidEntity)){
+        if (!eatenObject.contains(miamMiam.getUuid())){
             if (name.equals("PacGum")) {
-                eatenObject.add(uuidEntity);
                 setIsInvincible(true);
                 for (Ghost ghost : EntityManager.getGhosts()){
                     ghost.setFrightened();
                 }
                 setTimeInvicible(System.currentTimeMillis());
-                points += ((MiniCheese) miamMiam).getPoints();
-
-            }else if(name.equals("Fruits")){
-                points += ((MiniCheese) miamMiam).getPoints();
-                eatenObject.add(uuidEntity);
-
-            } else {
-                points+= ((MiniCheese) miamMiam).getPoints();
-                eatenObject.add(uuidEntity);
+            }
+            int ptsTemp = ((MiniCheese) miamMiam).getPoints();
+            points += ptsTemp;
+            eatenObject.add(miamMiam.getUuid());
+            if (ptsTemp == 10){
                 pointsMiam++;
             }
         }
@@ -123,6 +117,10 @@ public class Player extends Entity{
 
     private static long getTimeInvicible() {
         return timeInvicible;
+    }
+
+    public static int getPoints() {
+        return points;
     }
 
     private static void setTimeInvicible(long timeInvicible) {
@@ -162,6 +160,10 @@ public class Player extends Entity{
         return centreY;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public void setCentreY(int centreY) {
         this.centreY = centreY;
     }
@@ -179,7 +181,6 @@ public class Player extends Entity{
 
         float[] screenCoord = getScreenCoord();
         run(screenCoord);
-        //System.out.println(points);
 
         // Regarde le temps d'invincibilité
         // Si le temps est suppérieur

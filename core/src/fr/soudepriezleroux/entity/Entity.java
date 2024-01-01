@@ -123,9 +123,9 @@ public class Entity {
         this.facing = facing;
     }
 
-    public void move(float distance){
+    public boolean move(float distance){
         if(distance <= 0){
-            return;
+            return false;
         }
 
         int currentX = (int) Math.ceil(this.screenCoord[0] / 30) - 1;
@@ -142,7 +142,7 @@ public class Entity {
                 }
                 if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] != 4){
                     if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] == 4){
-                        break;
+                        return false;
                     }
                     this.screenCoord[0] += distance;
                     break;
@@ -153,7 +153,8 @@ public class Entity {
                     break;
                 }
                 if(currentX - 1 < 0){
-                    break;
+                    return false;
+
                 }
                 if(MapManager.getData()[30-currentY][(int) Math.ceil((this.screenCoord[0] - distance) / 30) - 1] != 4){
                     this.screenCoord[0] -= distance;
@@ -165,11 +166,13 @@ public class Entity {
                     break;
                 }
                 if(currentY + 1 > 30){
-                    break;
+                    return false;
+
                 }
                 if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][currentX] != 4){
                     if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] + distance + textureSize[0] - 4) / 30) - 1][(int) Math.ceil((this.screenCoord[0] + distance + textureSize[0] - 4) / 30) - 1] == 4){
-                        break;
+                        return false;
+
                     }
                     this.screenCoord[1] += distance;
                     break;
@@ -180,13 +183,14 @@ public class Entity {
                     break;
                 }
                 if(currentY - 1 < 0){
-                    break;
+                    return false;
                 }
                 if(MapManager.getData()[32 - (int) Math.ceil((this.screenCoord[1] - distance) / 30) - 1][currentX] != 4){
                     this.screenCoord[1] -= distance;
                     break;
                 }
         }
+        return true;
     }
 
 }
