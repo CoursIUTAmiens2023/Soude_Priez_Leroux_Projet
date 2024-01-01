@@ -38,24 +38,25 @@ public class CollisionManager {
                             if (Player.isIsInvincible()){
                                 player.eatGhost();
                                 //Reste de la position du ghost
+                                isEntity(false);
                             }else {
                                 player.hitGhost();
                                 if (player.getLives() != 0){
-                                float[] newCoord = player.getStartCoord();
+                                    float[] newCoord = player.getStartCoord();
                                     player.setCoord(newCoord[0], newCoord[1]);
                                     //Reset des positions des ghosts
                                 }
                             }
                             isEntity(false);
-                            return;
                         } else {
                             player.eatCheese(entity);
                             if (nameClasse.equals("Fruits")){
                                 Fruits.resetFruit();
                             }
+                            entity.dispose();
+                            isEntity(false);
                         }
-                        entity.dispose();
-                        isEntity(false);
+
                     }
                 }
             }

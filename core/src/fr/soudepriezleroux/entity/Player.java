@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.soudepriezleroux.entity.ghost.Ghost;
 
 import java.util.ArrayList;
