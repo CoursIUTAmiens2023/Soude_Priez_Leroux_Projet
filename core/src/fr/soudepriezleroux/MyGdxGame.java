@@ -49,19 +49,6 @@ public class MyGdxGame extends ApplicationAdapter {
                     new int[] {2, 2}, -1, 100, getMatrice()));
             UUID monClyde = EntityManager.addEntity(new Clyde("clyde", true, 1, 24, 24, 3+30*15, 3+30*(30-14), 24, 24, Facing.DOWN,
                     new int[] {2, 2}, -1, 100, getMatrice()));
-            bgMusic = Gdx.audio.newMusic(Gdx.files.internal("bgMusic.mp3"));
-            bgMusic.setVolume((float) 0.1);
-            bgMusic.setLooping(true);
-            bgMusic.play();
-
-            UUID monBlinky = EntityManager.addEntity(new Blinky("blinky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
-                    new int[] {2, 2}, -1, 100, getMatrice()));
-            UUID monPinky = EntityManager.addEntity(new Pinky("pinky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
-                    new int[] {2, 2}, -1, 100, getMatrice()));
-            UUID monInky = EntityManager.addEntity(new Inky("inky", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
-                    new int[] {2, 2}, -1, 100, getMatrice()));
-            UUID monClyde = EntityManager.addEntity(new Clyde("clyde", true, 1, 24, 24, 33, 33, 24, 24, Facing.DOWN,
-                    new int[] {2, 2}, -1, 100, getMatrice()));
 
             //Creation du player au coordonnées X Y de la fenetre
             UUID player = EntityManager.addEntity(new Player("player",false,2,16,16,395,210,16,16, Facing.UP));
