@@ -27,7 +27,6 @@ public class EntityManager {
     public static void init(Camera camera){
         entities = new ArrayList<>();
         spriteBatch = new SpriteBatch();
-
         spriteBatch.setProjectionMatrix(camera.combined);
     }
 
@@ -113,7 +112,6 @@ public class EntityManager {
         }
         return NewUuids;
     }
-
 
     //Methode de rendu pour faire le rendu de chaque entité du jeu
     public static void render(){
