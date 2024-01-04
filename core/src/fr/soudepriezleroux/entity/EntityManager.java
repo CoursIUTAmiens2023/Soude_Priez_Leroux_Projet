@@ -27,7 +27,6 @@ public class EntityManager {
     public static void init(Camera camera){
         entities = new ArrayList<>();
         spriteBatch = new SpriteBatch();
-
         spriteBatch.setProjectionMatrix(camera.combined);
     }
 
@@ -123,6 +122,10 @@ public class EntityManager {
         spriteBatch.end();
     }
 
+    public static Player getPlayer() {
+        return player;
+    }
+
     //Suppression d'une entité de la liste
     //Ainsi que liberation des ressources
     public static void removeEntity(UUID uuid){
@@ -153,6 +156,10 @@ public class EntityManager {
         for (Entity entity:entities) {
             EntityManager.removeEntity(entity.getUuid());
         }
+    }
+
+    public static void resetGhosts(){
+        ghosts.clear();
     }
 
     public static SpriteBatch getBatch(){

@@ -19,7 +19,7 @@ public class Player extends Entity{
     /**
      * Indique si le joueur est invincible suite à la prise d'un Pac-Gum
      */
-    private static boolean isInvincible;
+    private boolean isInvincible;
     /**
      * Début de l'invincibilité
      */
@@ -35,7 +35,7 @@ public class Player extends Entity{
     /**
      * Score du joueur
      */
-    private static int points;
+    private int points;
 
     /**
      * Points de vie du joueur
@@ -53,13 +53,15 @@ public class Player extends Entity{
 
     private int pointsMiam;
 
+    private int pointsFantomes;
+
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
 
         this.speed = 50;
-        isInvincible = false;
-        points = 0;
+        this.isInvincible = false;
+        this.points = 0;
         comboGhost = 0;
         eatenObject = new ArrayList<>();
         lives = 3;
@@ -67,6 +69,7 @@ public class Player extends Entity{
         centreX = (int)width/2;
         centreY = (int)height/2;
         pointsMiam = 0;
+        this.pointsFantomes = 0;
     }
 
     /**
@@ -87,8 +90,16 @@ public class Player extends Entity{
      * Ajout des points quand le joueur mange un fantome
      */
     public void eatGhost(){
-        points += 200 * (int)Math.pow(2, comboGhost);
-        comboGhost++;
+        if (comboGhost < 4){
+            int calcul = 200 * (int)Math.pow(2, comboGhost);
+            points += calcul;
+            pointsFantomes+= calcul;
+            comboGhost++;
+        }
+    }
+
+    public int getPointsFantomes() {
+        return pointsFantomes;
     }
 
     /**
@@ -118,7 +129,7 @@ public class Player extends Entity{
         return timeInvicible;
     }
 
-    public static int getPoints() {
+    public int getPoints() {
         return points;
     }
 
@@ -131,12 +142,12 @@ public class Player extends Entity{
         return super.getHitbox();
     }
 
-    public static boolean isIsInvincible() {
+    public boolean isIsInvincible() {
         return isInvincible;
     }
 
-    private static void setIsInvincible(Boolean isInvincible){
-        Player.isInvincible = isInvincible;
+    private void setIsInvincible(Boolean isInvincible){
+        this.isInvincible = isInvincible;
     }
 
     private void resetComboGhost() {

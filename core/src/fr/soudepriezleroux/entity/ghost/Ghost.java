@@ -13,6 +13,9 @@ import java.util.Set;
 public abstract class Ghost extends Entity {
 
     private int[] pos;      // coordonnées matrice
+    private int[] startPos; //Coordonnée au au lancement de l'appli
+
+    private float[] startCoord;
     private int direction;      // HAUT 0 DROITE 1 BAS 2 GAUCHE 3
     private int baseSpeed;
     private int speed;
@@ -28,6 +31,8 @@ public abstract class Ghost extends Entity {
     public Ghost(String prefix, boolean isAnimated, int nbrFrame, float width, float height, float x, float y, float textureSizeX, float textureSizeY, Facing facing, int[] pos, int direction, int speed, int[][] matrice) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
         this.pos = pos;
+        this.startPos = pos;
+        this.startCoord = new float[]{x,y};
         this.direction = direction;
         this.baseSpeed = speed;
         this.speed = speed;
@@ -45,8 +50,16 @@ public abstract class Ghost extends Entity {
         return pos;
     }
 
+    public int[] getStartPos() {
+        return startPos;
+    }
+
     public void setPos(int[] pos) {
         this.pos = pos;
+    }
+
+    public float[] getStartCoord() {
+        return startCoord;
     }
 
     public int getDirection() {

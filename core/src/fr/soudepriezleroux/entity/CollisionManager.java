@@ -1,5 +1,10 @@
 package fr.soudepriezleroux.entity;
 
+import com.badlogic.gdx.Gdx;
+import fr.soudepriezleroux.MyGdxGame;
+import fr.soudepriezleroux.entity.ghost.Ghost;
+import fr.soudepriezleroux.gameTest;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -18,11 +23,7 @@ public class CollisionManager {
     private static Boolean entity_check;
     public static void init(ArrayList<Entity> entities, UUID player){
         CollisionManager.entities = entities;
-        for (Entity entity: entities){
-            if (entity.getUuid().equals(player)){
-                CollisionManager.player = (Player)entity;
-            }
-        }
+        CollisionManager.player = (Player) EntityManager.getEntity(player);
 
         isEntity(false);
     }
@@ -35,28 +36,46 @@ public class CollisionManager {
                         String nameClasse = entity.getClass().getSuperclass().getSimpleName();
                         isEntity(true);
                         if (nameClasse.equals("Ghost") ) {
-                            if (Player.isIsInvincible()){
+                            if (CollisionManager.player.isIsInvincible()){
                                 player.eatGhost();
-                                //Reste de la position du ghost
+                                Ghost ghost = (Ghost) entity;
+                                float[] startCoord = ghost.getStartCoord();
+                                int[] startPos = ghost.getStartPos();
+                                ghost.setCoord(startCoord[0], startCoord[1]);
+                                ghost.setPos(startPos);
                                 isEntity(false);
                             }else {
                                 player.hitGhost();
                                 if (player.getLives() != 0){
                                     float[] newCoord = player.getStartCoord();
                                     player.setCoord(newCoord[0], newCoord[1]);
+                                    for (Ghost ghost : EntityManager.getGhosts()){
+                                        int[] startPos = ghost.getStartPos();
+                                        float[] startCoord = ghost.getStartCoord();
+                                        ghost.setCoord(startCoord[0], startCoord[1]);
+                                        ghost.setPos(startPos);
+                                    }
                                     //Reset des positions des ghosts
+                                }else {
+                                    if (MyGdxGame.getOnTest()){
+                                        gameTest.setIsLost(true);
+                                    }else {
+                                        //Le joueur perd, l'appication se ferme
+                                        Gdx.app.exit();
+                                    }
                                 }
                             }
                             isEntity(false);
-                            return;
-                        } else {
+                        } else if(!entity.getClass().getSimpleName().equals("Player")){
                             player.eatCheese(entity);
                             if (nameClasse.equals("Fruits")){
                                 Fruits.resetFruit();
+
                             }
+                            entity.dispose();
+                            isEntity(false);
                         }
-                        entity.dispose();
-                        isEntity(false);
+
                     }
                 }
             }
