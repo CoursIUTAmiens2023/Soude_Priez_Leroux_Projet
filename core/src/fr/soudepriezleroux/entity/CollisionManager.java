@@ -55,7 +55,6 @@ public class CollisionManager {
                                         ghost.setCoord(startCoord[0], startCoord[1]);
                                         ghost.setPos(startPos);
                                     }
-                                    //Reset des positions des ghosts
                                 }else {
                                     if (MyGdxGame.getOnTest()){
                                         gameTest.setIsLost(true);

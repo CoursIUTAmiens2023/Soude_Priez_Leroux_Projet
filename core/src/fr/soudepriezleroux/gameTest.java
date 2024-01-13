@@ -99,7 +99,7 @@ public class gameTest {
 
             throw new Exception();
         }catch (Exception e){
-            
+
             return false;
         }
    }
@@ -135,7 +135,7 @@ public class gameTest {
         try{
             UUID PacGum = EntityManager.addEntity(new PacGum("pacGum", 50, false, 1, 32,32, 700, 300, 32,32, Facing.LEFT));
             if(EntityManager.getEntity(PacGum) != null){
-                
+
                 return true;
             }
             throw new Exception();
@@ -367,7 +367,7 @@ public class gameTest {
         System.out.println(separateur);
 
         //Initialisation jeu
-       System.out.println("Initialisation : " + initGame());
+        System.out.println("Initialisation : " + initGame());
         System.out.println(separateur);
 
 
@@ -376,11 +376,9 @@ public class gameTest {
         System.out.println(separateur);
 
 
-
         //Création Player Test
         System.out.println(playerString + createPlayer());
         System.out.println(separateur);
-
 
 
         //Ajout points test
@@ -390,21 +388,19 @@ public class gameTest {
             System.out.println(separateur);
         }
 
+
         //Test déplacement joueur
         System.out.println(mooveString + moovePLayer());
         System.out.println(separateur);
-
 
 
         //Test Invincibilité joueur
         System.out.println(invicibleString + pacManIsInvincible());
         System.out.println(separateur);
 
-
         //Test metGhost
         System.out.println(metGhostString + metGhost());
         System.out.println(separateur);
-
 
         //Test rencontre mur
         if(wallWalked((float) 1)){
