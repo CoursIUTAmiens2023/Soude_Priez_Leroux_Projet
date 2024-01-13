@@ -55,6 +55,10 @@ public class Player extends Entity{
 
     private int pointsFantomes;
 
+    private float[] screenCoordTunelGauche = new float[]{(float) 1, (float) 485.31522};
+    private float[] screenCoordTunelDroit = new float[]{(float) 790, (float) 485.31522};
+
+
     public Player(String prefix, boolean isAnimated, int nbrFrame, float width, float height,
                   float x, float y, float textureSizeX, float textureSizeY, Facing facing) {
         super(prefix, isAnimated, nbrFrame, width, height, x, y, textureSizeX, textureSizeY, facing);
@@ -77,8 +81,10 @@ public class Player extends Entity{
      * @param screenCoord - Les coordonnées du joueur sur l'écran
      */
     public void run(float[] screenCoord){
-        if (screenCoord[1] < 931 && screenCoord[1] > 0 && screenCoord[0] > 0 && screenCoord[0] < 811){
-            this.move(speed * Gdx.graphics.getDeltaTime());
+        if(!goTunel(screenCoord)){
+            if (screenCoord[1] < 931 && screenCoord[1] > 0 && screenCoord[0] > 0 && screenCoord[0] < 811){
+                this.move(speed * Gdx.graphics.getDeltaTime());
+            }
         }
     }
 
@@ -100,6 +106,22 @@ public class Player extends Entity{
 
     public int getPointsFantomes() {
         return pointsFantomes;
+    }
+
+    /**
+     * Verifie et place pac-mac lorsqu'il traverse le tunnel
+     */
+    public boolean goTunel(float[] screenCoord){
+        if (screenCoord[0] < screenCoordTunelGauche[0] && this.facing == Facing.LEFT){
+            this.setCoord(screenCoordTunelDroit[0], screenCoordTunelDroit[1]);
+            return true;
+        }
+        if (screenCoord[0] > screenCoordTunelDroit[0] && this.facing == Facing.RIGHT) {
+            this.setCoord(screenCoordTunelGauche[0], screenCoordTunelGauche[1]);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -188,7 +210,6 @@ public class Player extends Entity{
 
     @Override
     public void render(SpriteBatch spriteBatch){
-
         float[] screenCoord = getScreenCoord();
         run(screenCoord);
 

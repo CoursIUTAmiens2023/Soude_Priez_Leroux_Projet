@@ -29,7 +29,9 @@ public class MapManager {
             for (int j = 0; j < 31; j++) {
                 switch (getData()[j][i]){
                     case 1:
-                        EntityManager.addEntity(new MiniCheese("pacGum", 10, false, 1, 12,12, i*30+10, 910 - j*30, 12,12, Facing.LEFT));
+                        MiniCheese unMiniCheese = new MiniCheese("pacGum", 10, false, 1, 12,12, i*30+10, 910 - j*30, 12,12, Facing.LEFT);
+                        EntityManager.addEntity(unMiniCheese);
+                        EntityManager.addMiniCheese(unMiniCheese);
                         break;
                     case 2:
                         EntityManager.addEntity(new PacGum("pacGum", 50, false, 1, 24,24, i*30+5, 905 - j*30, 24,24, Facing.LEFT));

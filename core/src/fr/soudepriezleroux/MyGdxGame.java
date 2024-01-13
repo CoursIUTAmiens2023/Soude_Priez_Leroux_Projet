@@ -22,7 +22,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	//Creation de la camera qui permet de voir le jeu
 	private OrthographicCamera camera;
 	private Music bgMusic;
-	private static Boolean onTest = false;	//	Mettre a true pour voir les test
+	private static Boolean onTest = true;	//	Mettre a true pour voir les test
 
 	@Override
 	public void create () {
@@ -68,6 +68,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	//Methode call a chaque frame
 	@Override
 	public void render () {
+		if(EntityManager.getLstMiniCheeseEaten().size() == EntityManager.getLstMiniCheese().size()){
+			//Le joueur perd, l'appication se ferme
+			Gdx.app.exit();
+		}
 		if (!onTest){
 			//Nettoyage de l'ecran avant le rendu de la prochaine frame
 			ScreenUtils.clear(0, 0, 0, 1);
