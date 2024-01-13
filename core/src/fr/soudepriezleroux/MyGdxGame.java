@@ -68,10 +68,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	//Methode call a chaque frame
 	@Override
 	public void render () {
-		if(EntityManager.getLstMiniCheeseEaten().size() == EntityManager.getLstMiniCheese().size()){
-			//Le joueur perd, l'appication se ferme
-			Gdx.app.exit();
-		}
 		if (!onTest){
 			//Nettoyage de l'ecran avant le rendu de la prochaine frame
 			ScreenUtils.clear(0, 0, 0, 1);
@@ -84,6 +80,13 @@ public class MyGdxGame extends ApplicationAdapter {
 			camera.update(true);
 			CollisionManager.render();
 		}
+		int eaten = EntityManager.getLstMiniCheeseEaten().size();
+		int not = EntityManager.getLstMiniCheese().size();
+		if(eaten == not){
+			//Le joueur perd, l'appication se ferme
+			Gdx.app.exit();
+		}
+
 	}
 
 	//Liberation des ressources
