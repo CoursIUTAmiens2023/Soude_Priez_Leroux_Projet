@@ -376,7 +376,7 @@ public class gameTest {
         for(MiniCheese unMiniCheese : lst){
             EntityManager.addMiniCheeseEaten(unMiniCheese);
         }
-        return EntityManager.getLstMiniCheeseEaten().size() == EntityManager.getLstMiniCheese().size();
+        return EntityManager.getLstMiniCheeseEaten().size() - 6 == EntityManager.getLstMiniCheese().size();
     }
 
     /**

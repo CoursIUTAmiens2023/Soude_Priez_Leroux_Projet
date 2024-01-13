@@ -195,6 +195,6 @@ public class EntityManager {
     }
 
     public static ArrayList<MiniCheese> getLstMiniCheeseEaten(){
-        return lstMiniCheese;
+        return lstMiniCheeseEaten;
     }
 }
