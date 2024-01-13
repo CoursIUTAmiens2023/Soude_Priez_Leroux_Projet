@@ -69,7 +69,8 @@ public class CollisionManager {
                             player.eatCheese(entity);
                             if (nameClasse.equals("Fruits")){
                                 Fruits.resetFruit();
-
+                            }else if (nameClasse.equals("MiniCheese")){
+                                EntityManager.addMiniCheeseEaten((MiniCheese) entity);
                             }
                             entity.dispose();
                             isEntity(false);

@@ -17,6 +17,9 @@ public class EntityManager {
     @Getter
     private static SpriteBatch spriteBatch = new SpriteBatch();
 
+    private static ArrayList<MiniCheese> lstMiniCheese = new ArrayList<>();
+    private static ArrayList<MiniCheese> lstMiniCheeseEaten = new ArrayList<>();
+
     private static Player player;
 
     private static Blinky blinky;
@@ -153,9 +156,12 @@ public class EntityManager {
 
     //Suppression de toutes les entités de la liste
     public static void removeAll(){
-        for (Entity entity:entities) {
-            EntityManager.removeEntity(entity.getUuid());
-        }
+        try {
+            for (Entity entity:entities) {
+                EntityManager.removeEntity(entity.getUuid());
+            }
+        }catch (Exception e){}
+
     }
 
     public static void resetGhosts(){
@@ -176,4 +182,19 @@ public class EntityManager {
         spriteBatch.dispose();
     }
 
+    public static void addMiniCheese(MiniCheese unMiniCheese){
+        lstMiniCheese.add(unMiniCheese);
+    }
+
+    public static void addMiniCheeseEaten(MiniCheese unMiniCheese){
+        lstMiniCheeseEaten.add(unMiniCheese);
+    }
+
+    public static ArrayList<MiniCheese> getLstMiniCheese(){
+        return lstMiniCheese;
+    }
+
+    public static ArrayList<MiniCheese> getLstMiniCheeseEaten(){
+        return lstMiniCheese;
+    }
 }
