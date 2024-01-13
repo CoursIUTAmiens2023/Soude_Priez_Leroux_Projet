@@ -181,9 +181,13 @@ public abstract class Ghost extends Entity {
 
     // Détermine une direction aléatoire pour le ghost
     public void goRandomDirection() {
-        Random rand = new Random();
-        ArrayList<Integer> validDirections = getValidDirections();
-        direction = validDirections.get(rand.nextInt(validDirections.size()));
+        try{
+            Random rand = new Random();
+            ArrayList<Integer> validDirections = getValidDirections();
+            direction = validDirections.get(rand.nextInt(validDirections.size()));
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     // Détermine la direction valide dont la case est la plus proche de la cible

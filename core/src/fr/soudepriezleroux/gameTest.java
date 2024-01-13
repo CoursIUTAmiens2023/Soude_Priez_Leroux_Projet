@@ -367,7 +367,7 @@ public class gameTest {
         System.out.println(separateur);
 
         //Initialisation jeu
-       System.out.println("Initialisation : " + initGame());
+        System.out.println("Initialisation : " + initGame());
         System.out.println(separateur);
 
 
