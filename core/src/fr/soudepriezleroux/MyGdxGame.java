@@ -22,7 +22,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	//Creation de la camera qui permet de voir le jeu
 	private OrthographicCamera camera;
 	private Music bgMusic;
-	private static Boolean onTest = true;
+	private static Boolean onTest = false;	//	Mettre a true pour voir les test
 
 	@Override
 	public void create () {
