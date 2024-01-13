@@ -458,9 +458,9 @@ public class gameTest {
             System.out.println(wallWalkedString + "false " + "(true Attendu)");
         }
         if(!wallWalked((float) 110)){
-            System.out.println(wallWalkedString + "true" + " (false Attendu)");
+            System.out.println(wallWalkedString + "true" + " (Erreur Attendu) (Si true alors l'erreur est survenue)");
         }else {
-            System.out.println(wallWalkedString + "false " + "(false Attendu)");
+            System.out.println(wallWalkedString + "false " + "(Erreur Attendu) (Si true alors l'erreur est survenue)");
         }
         System.out.println(separateur);
 
