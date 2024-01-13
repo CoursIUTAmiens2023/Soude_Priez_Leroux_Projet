@@ -1,6 +1,7 @@
 package fr.soudepriezleroux;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import fr.soudepriezleroux.entity.*;
@@ -49,6 +50,11 @@ public class gameTest {
     private static String playerEatGhostString = "Test ingestion fantome : ";
 
     private static String playerEatGhostsString = "Test ingestion plusieurs fantomes (combo) : ";
+
+    private static String playerEatAll = "Test ingestion toutes les Pac-Gum : ";
+
+    private static String testTunelGauche = "Test Tunel Gauche : ";
+    private static String testTunelDroit = "Test Tunel Droit : ";
     private static String metGhostString = "Test rencontre Player-Ghost : ";
 
     private static String wallWalkedString = "Test arret au niveau d'un mur : ";
@@ -361,6 +367,49 @@ public class gameTest {
     }
 
     /**
+     * Test s'il reste des mini pac-gum sur la map
+     * @return True s'il n'y a plus de Pac-Gum | False s'il en reste
+     */
+    public static boolean eatAll(){
+        Player player = EntityManager.getPlayer();
+        ArrayList<MiniCheese> lst = EntityManager.getLstMiniCheese();
+        for(MiniCheese unMiniCheese : lst){
+            EntityManager.addMiniCheeseEaten(unMiniCheese);
+        }
+        return EntityManager.getLstMiniCheeseEaten().size() == EntityManager.getLstMiniCheese().size();
+    }
+
+    /**
+     * Test du tuel Gauche
+     * @return True si le joueur est bien emmené sur le tunel droit | False si ce n'est pas le cas
+     */
+    public static boolean testTunelGauche(){
+        float[] tunelDroit = new float[]{(float) 790, (float) 485.31522};
+        Player player = EntityManager.getPlayer();
+        player.setCoord(0.507F, 485F);
+        player.setFacing(Facing.LEFT);
+        player.goTunel(player.getScreenCoord());
+        float[] endScreenCord = player.getScreenCoord();
+
+        return endScreenCord[0] == tunelDroit[0];
+    }
+
+    /**
+     * Test du tuel Droit
+     * @return True si le joueur est bien emmené sur le tunel Gauche | False si ce n'est pas le cas
+     */
+    public static boolean testTunelDroit(){
+        float[] tunelGauche = new float[]{(float) 1, (float) 485.31522};
+        Player player = EntityManager.getPlayer();
+        player.setCoord(800F, 485F);
+        player.setFacing(Facing.RIGHT);
+        player.goTunel(player.getScreenCoord());
+        float[] endScreenCord = player.getScreenCoord();
+
+        return endScreenCord[0] == tunelGauche[0];
+    }
+
+    /**
      * Effectue les test et les affiches au propre
      */
     public static void hubTest(){
@@ -424,7 +473,16 @@ public class gameTest {
         System.out.println(playerEatGhostsString + playerEatGhosts());
         System.out.println(separateur);
 
+        //Test de fin de partie lorsque tout les mini pac gum sont mangés
+        System.out.println(playerEatAll + eatAll());
+        System.out.println(separateur);
 
+        //Test des tunels
+        System.out.println(testTunelGauche + testTunelGauche());
+        System.out.println(testTunelDroit + testTunelDroit());
+
+
+        Gdx.app.exit();
     }
 
     /**
